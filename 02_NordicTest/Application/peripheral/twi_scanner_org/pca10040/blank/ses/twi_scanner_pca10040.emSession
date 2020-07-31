@@ -48,13 +48,15 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="16" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../ws2812/nrf_ws2812.h" selected="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="339" useTextEdit="1" useBinaryEdit="0" left="0" path="../config/sdk_config.h" selected="0" top="314" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="178" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../integration/nrfx/legacy/nrf_drv_twi.c" selected="0" top="54" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="39" y="202" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../i2c_stm8_driver/nrf_drv_mpu_twi.c" selected="0" top="176" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="188" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="166" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="68" y="198" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../i2c_stm8_driver/nrf_drv_mpu_twi.c" selected="0" top="161" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="39" y="194" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="179" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="76" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../ws2812/nrf_ws2812.c" selected="0" top="57" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="38" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../i2c_stm8_driver/nrf_drv_mpu.h" selected="0" top="10" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../i2c_stm8_driver/i2c_stm8_register_map.h" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="95" y="195" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../integration/nrfx/legacy/nrf_drv_twi.h" selected="0" top="176" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="66" y="554" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../modules/nrfx/drivers/src/nrfx_twim.c" selected="0" top="550" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="195" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../integration/nrfx/legacy/nrf_drv_twi.h" selected="0" top="176" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="554" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../modules/nrfx/drivers/src/nrfx_twim.c" selected="0" top="550" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="65" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../integration/nrfx/legacy/nrf_drv_gpiote.h" selected="0" top="50" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="70" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../modules/nrfx/drivers/include/nrfx_gpiote.h" selected="0" top="53" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="twi_scanner_pca10040" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="D:/2018/KODIMO/Monte/01_Dev/03_Extensions/01_Head/03_Source/03_i2c_stm8/02_NordicTest/Application/peripheral/twi_scanner_org/i2c_stm8_driver" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
