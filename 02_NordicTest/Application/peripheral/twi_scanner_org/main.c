@@ -185,19 +185,26 @@ int main(void)
 #define EXTENSION_GET_EVT_REG 0x02
 #define EXTENSION_ROTATE_LED_REG 0x10
 #define EXTENSION_ROTATE_LED2_REG 0x11
+#define SR04_DIS_DATA_REG 0x12
+NRF_LOG_INFO("Heloooooo");NRF_LOG_FLUSH();
     uint8_t p[1] = {0x00};
     while (true)
     {
 //      scan_address();
       if(is_irq_extension){
-        nrf_drv_mpu_read_registers(EXTENSION_GET_EVT_REG,p,1);
-        NRF_LOG_INFO("p0=%x",p[0]);
-//         NRF_LOG_INFO("p1=%x",p[1]); 
+        nrf_drv_mpu_read_registers(SR04_DIS_DATA_REG,p,1);
+        NRF_LOG_INFO("p0=%x ->%d cm",p[0],p[0]);
+//         NRF_LOG_INFO("p1=%d",p[0]); 
         is_irq_extension=false;
       }
-//      nrf_drv_mpu_write_registers(0x01,p,1);
-//      nrf_drv_mpu_write_single_register(0x01,0x03);
-//      NRF_LOG_INFO("p=%x",p[1]); 
+//      nrf_drv_mpu_write_registers(EXTENSION_SET_REG,p,2);
+//      nrf_delay_ms(2000);
+//      nrf_drv_mpu_read_registers(EXTENSION_ROTATE_LED_REG,p,2);
+//      nrf_delay_ms(20);
+////      nrf_drv_mpu_write_single_register(0x01,0x03);
+//      NRF_LOG_INFO("p=%x",p[0]); 
+//      NRF_LOG_INFO("p=%x",p[1]);
+//      nrf_delay_ms(5000);
       NRF_LOG_FLUSH();
     };
 

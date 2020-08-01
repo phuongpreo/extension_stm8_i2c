@@ -43,13 +43,13 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="72" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../components/boards/pca10040.h" selected="0" top="64" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="72" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../components/boards/pca10040.h" selected="0" top="64" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="100" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../modules/nrfx/drivers/include/nrfx_i2s.h" selected="0" top="78" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="16" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../ws2812/nrf_ws2812.h" selected="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="339" useTextEdit="1" useBinaryEdit="0" left="0" path="../config/sdk_config.h" selected="0" top="314" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="178" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../integration/nrfx/legacy/nrf_drv_twi.c" selected="0" top="54" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="68" y="198" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../i2c_stm8_driver/nrf_drv_mpu_twi.c" selected="0" top="161" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="39" y="194" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="179" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="3" y="34" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../i2c_stm8_driver/nrf_drv_mpu_twi.c" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="30" y="182" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="181" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="76" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../ws2812/nrf_ws2812.c" selected="0" top="57" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="38" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../i2c_stm8_driver/nrf_drv_mpu.h" selected="0" top="10" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../i2c_stm8_driver/i2c_stm8_register_map.h" selected="0" top="0" codecName="Default"/>

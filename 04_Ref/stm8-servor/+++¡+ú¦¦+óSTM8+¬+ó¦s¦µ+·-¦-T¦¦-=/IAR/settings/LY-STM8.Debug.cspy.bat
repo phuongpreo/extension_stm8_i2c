@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "E:\01. 众拳\10.(众拳)全系列开发板通用模块\【模块篇】第34讲 舵机驱动实验\程序\IAR\settings\LY-STM8.Debug.general.xcl" --backend -f "E:\01. 众拳\10.(众拳)全系列开发板通用模块\【模块篇】第34讲 舵机驱动实验\程序\IAR\settings\LY-STM8.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\04_Ref\stm8-servor\+++隆+煤娄娄+贸STM8+卢+贸娄s娄碌+路-娄-T娄娄-=\IAR\settings\LY-STM8.Debug.general.xcl" --backend -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\04_Ref\stm8-servor\+++隆+煤娄娄+贸STM8+卢+贸娄s娄碌+路-娄-T娄娄-=\IAR\settings\LY-STM8.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "E:\01. 众拳\10.(众拳)全系列开发板通用模块\【模块篇】第34讲 舵机驱动实验\程序\IAR\settings\LY-STM8.Debug.general.xcl" "--debug_file=%~1" --backend -f "E:\01. 众拳\10.(众拳)全系列开发板通用模块\【模块篇】第34讲 舵机驱动实验\程序\IAR\settings\LY-STM8.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\04_Ref\stm8-servor\+++隆+煤娄娄+贸STM8+卢+贸娄s娄碌+路-娄-T娄娄-=\IAR\settings\LY-STM8.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\04_Ref\stm8-servor\+++隆+煤娄娄+贸STM8+卢+贸娄s娄碌+路-娄-T娄娄-=\IAR\settings\LY-STM8.Debug.driver.xcl" 
 
 @echo off 
 :end

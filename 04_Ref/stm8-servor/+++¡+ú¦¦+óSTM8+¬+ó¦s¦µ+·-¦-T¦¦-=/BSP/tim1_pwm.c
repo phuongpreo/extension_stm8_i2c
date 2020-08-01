@@ -53,30 +53,30 @@ void DJ_KZ_Key(void)
                 printf_bz=1;
           }
           break;
-          case 0x44://右
-          {
-                djsd=2500;
-                TIM1_SetCompare1(djsd);  //2.5ms 90 度              
-                while(TM1650_Key()==key);
-                printf_bz=1;
-          }
-          break;
-          case 0x64://上
-          {
-                if(djsd>500) djsd=djsd-500;            
-                TIM1_SetCompare1(djsd);  
-                while(TM1650_Key()==key);
-                printf_bz=1;
-          }
-          break;
-          case 0x5C://下 减速
-          {
-                if(djsd<2500) djsd=djsd+500;            
-                TIM1_SetCompare1(djsd);  
-                while(TM1650_Key()==key);
-                printf_bz=1;
-          }
-          break;
+//          case 0x44://右
+//          {
+//                djsd=2500;
+//                TIM1_SetCompare1(djsd);  //2.5ms 90 度              
+//                while(TM1650_Key()==key);
+//                printf_bz=1;
+//          }
+//          break;
+//          case 0x64://上
+//          {
+//                if(djsd>500) djsd=djsd-500;            
+//                TIM1_SetCompare1(djsd);  
+//                while(TM1650_Key()==key);
+//                printf_bz=1;
+//          }
+//          break;
+//          case 0x5C://下 减速
+//          {
+//                if(djsd<2500) djsd=djsd+500;            
+//                TIM1_SetCompare1(djsd);  
+//                while(TM1650_Key()==key);
+//                printf_bz=1;
+//          }
+//          break;
     }
 }
 
@@ -95,25 +95,25 @@ void DJ_KZ_Uart(u8 dt)
                 djsd=1000;
                 TIM1_SetCompare1(djsd);  //1ms -45 度  
           }
-          break;
-          case 0x15:
-          {
-                djsd=1500;
-                TIM1_SetCompare1(djsd);  //1.5ms 0 度  
-          }
-          break;
-          case 0x20:
-          {
-                djsd=2000;
-                TIM1_SetCompare1(djsd);  //20ms 45 度  
-          }
-          break;
-          case 0x25:
-          {
-                djsd=2500;
-                TIM1_SetCompare1(djsd);  //2.5ms 90 度  
-          }
-          break;
+//          break;
+//          case 0x15:
+//          {
+//                djsd=1500;
+//                TIM1_SetCompare1(djsd);  //1.5ms 0 度  
+//          }
+//          break;
+//          case 0x20:
+//          {
+//                djsd=2000;
+//                TIM1_SetCompare1(djsd);  //20ms 45 度  
+//          }
+//          break;
+//          case 0x25:
+//          {
+//                djsd=2500;
+//                TIM1_SetCompare1(djsd);  //2.5ms 90 度  
+//          }
+//          break;
     }
     
     printf_bz=1;

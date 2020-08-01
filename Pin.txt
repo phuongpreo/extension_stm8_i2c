@@ -1,0 +1,14 @@
+STM8S003 side
+==I2C==
+SDA:PB5
+SCL:PB4
+==Servo==
+PWM:PC3
+==UART==
+TX:PD5
+RX:PD4
+==IRQ==
+IRQ:PC5
+==Ultrasonic==
+ECHO:PD3
+TRIG:PD2

@@ -1,10 +1,10 @@
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\stm8\bin\stm8proc.dll" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\stm8\bin\stm8proc.dll" 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\stm8\bin\stm8stlink.dll" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\stm8\bin\stm8stlink.dll" 
 
-"E:\01. 众拳\10.(众拳)全系列开发板通用模块\【模块篇】第34讲 舵机驱动实验\程序\IAR\Debug\Exe\LY-STM8.out" 
+"D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\04_Ref\stm8-servor\+++隆+煤娄娄+贸STM8+卢+贸娄s娄碌+路-娄-T娄娄-=\IAR\Debug\Exe\LY-STM8.out" 
 
---plugin "D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\stm8\bin\stm8bat.dll" 
+--plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\stm8\bin\stm8bat.dll" 
 
 
 

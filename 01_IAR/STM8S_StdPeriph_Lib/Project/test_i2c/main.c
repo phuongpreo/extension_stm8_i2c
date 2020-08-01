@@ -42,16 +42,18 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+#define EXTENSION_SET_REG 0x01
 #define EXTENSION_GET_EVT_REG 0x02
 #define EXTENSION_ROTATE_LED_REG 0x10
 #define EXTENSION_ROTATE_LED2_REG 0x11
-
+#define SR04_DIS_DATA_REG 0x12
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
   /* Private variables ---------------------------------------------------------*/
-__IO uint8_t Slave_Buffer_Rx[6];//255
-__IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
-__IO uint16_t Event = 0x00;
+//__IO uint8_t Slave_Buffer_Rx[6];//255
+//__IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
+//__IO uint16_t Event = 0x00;
+volatile bool is_stop =FALSE;
 
 volatile uint8_t *read_p;
 volatile uint8_t *write_p;
@@ -61,7 +63,9 @@ volatile uint8_t reading;
 
 volatile uint8_t buf[3];
 volatile uint16_t val;
-volatile uint8_t evt_reg = 0x01;
+volatile uint8_t evt_reg = 0x64;
+
+volatile uint8_t sr04_dis_reg=0x00;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /* Public functions ----------------------------------------------------------*/
@@ -72,9 +76,13 @@ volatile uint8_t evt_reg = 0x01;
   * @retval None
   */
 void Delay (uint16_t nCount);
+void Delay_us(uint32_t time_delay);
+void Delay_ms(uint32_t time_delay);
 uint8_t get_cout_content(__IO uint8_t *buff);
+void Timer1_PWM_Configuration(void);
 void SetupSerialPort();
 void Printf(char *message);
+void ServoSetAngle(uint8_t angle);
 void init_tim2();
 void main(void)
 {
@@ -85,11 +93,12 @@ void main(void)
   /* Initialize LEDs mounted on STM8/128-EVAL board */
 
 	
-  I2C_DeInit();
   SetupSerialPort();
-  Printf("Hello");
+  Printf("Hello\n");
+  I2C_DeInit();
+
    // UART1_Init((uint32_t)115200, UART1_WORDLENGTH_8D, UART1_STOPBITS_1, UART1_PARITY_NO,
-   //         UART1_SYNCMODE_CLOCK_DISABLE, UART1_MODE_TXRX_ENABLE);
+   // UART1_SYNCMODE_CLOCK_DISABLE, UART1_MODE_TXRX_ENABLE);
   /* Initialize I2C peripheral */
 
 #ifdef I2C_slave_7Bits_Address
@@ -101,43 +110,56 @@ void main(void)
   /* Enable Error Interrupt*/
   I2C_ITConfig((I2C_IT_TypeDef)(I2C_IT_ERR | I2C_IT_EVT | I2C_IT_BUF), ENABLE);
   
-  GPIO_Init(GPIOC, GPIO_PIN_4, GPIO_MODE_OUT_PP_LOW_FAST);
+  //GPIO_Init(GPIOC, GPIO_PIN_4, GPIO_MODE_OUT_PP_LOW_FAST);
   GPIO_Init(GPIOC, GPIO_PIN_5, GPIO_MODE_OUT_PP_LOW_FAST);
   
   
-      /* TRIG */
-      #define TRIG_PORT   GPIOD
-    #define TRIG_PIN    GPIO_PIN_2
-    TRIG_PORT->ODR &= (uint8_t)(~TRIG_PIN); // default low
-    TRIG_PORT->CR1 |= (uint8_t)TRIG_PIN;    // push-pull
-    TRIG_PORT->CR2 &= (uint8_t)(~TRIG_PIN); // slow
-    TRIG_PORT->DDR |= (uint8_t)TRIG_PIN;    // output
+    /* TRIG */
+  #define TRIG_PORT   GPIOD
+  #define TRIG_PIN    GPIO_PIN_2
+  TRIG_PORT->ODR &= (uint8_t)(~TRIG_PIN); // default low
+  TRIG_PORT->CR1 |= (uint8_t)TRIG_PIN;    // push-pull
+  TRIG_PORT->CR2 &= (uint8_t)(~TRIG_PIN); // slow
+  TRIG_PORT->DDR |= (uint8_t)TRIG_PIN;    // output
     
     
   I2C_Cmd(ENABLE);
   init_tim2();
+  //Timer1_PWM_Configuration();
   /* Enable general interrupts */
   enableInterrupts();
 
 
   /*Main Loop */
+  int16_t c =0;
   while (1)
   {
     /* infinite loop */
-   
- /*   
-    evt_reg++;Printf("Send:");char reg = evt_reg;Printf(&reg);
+//    if(is_stop) {
+//      Printf("rec\n");
+//      is_stop=FALSE;
+//    }
+//if(c%20==0)    ServoSetAngle(10);
+//if(c%30==0)    ServoSetAngle(90);
+    
+
+/*
+    //evt_reg++;Printf("Send:");char reg = evt_reg;Printf(&reg);Printf("\n");
     GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
     Delay(0x00FF); 
     GPIO_WriteLow(GPIOC,GPIO_PIN_5);
-*/
+    Delay_ms(2000);
+ */ 
 
     TRIG_PORT->ODR |= TRIG_PIN; // TRIG high
     for(volatile int8_t i = 0; i < 5; i++);
     TRIG_PORT->ODR &= ~(TRIG_PIN); // TRIG low
     TIM2->CR1 |= TIM2_CR1_CEN; // start timer 2
-    for(int i = 0; i < 1; i++)Delay(0xFFFF); 
-  
+    for(int i = 0; i < 1; i++){
+      Delay_ms(200); 
+      c++;
+    }
+
   }
 }
 
@@ -166,6 +188,20 @@ void Delay(uint16_t nCount)
   {
     nCount--;
   }
+}
+void Delay_us(uint32_t time_delay)
+{
+while(time_delay--)
+{
+}
+}
+
+void Delay_ms(uint32_t time_delay)
+{
+while(time_delay--)
+{
+  Delay_us(200);
+}
 }
 /**
   * @}
@@ -196,6 +232,24 @@ void Printf(char *message)
         ch++;
     }
 }
+//Setup PWM Servo
+void ServoSetAngle(uint8_t angle){
+  TIM1_SetCompare3(angle*100);//1000-10000 : 0-100
+}
+void Timer1_PWM_Configuration(void)
+{
+    TIM1_DeInit();								// reset all register timer1
+    CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER1, ENABLE);	                // provide clock for timer1
+    TIM1_TimeBaseInit(1,TIM1_COUNTERMODE_UP, 40000,0);			// config frequency interrupt PSC= 15999+1 =16000, ARR = 1000 -> F_interrupt = 16*10^6 / 1/40000 = 1Hz = 1s
+    TIM1_OC3Init(TIM1_OCMODE_PWM1, TIM1_OUTPUTSTATE_ENABLE, TIM1_OUTPUTNSTATE_DISABLE,
+    3000, TIM1_OCPOLARITY_HIGH, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET,
+    TIM1_OCNIDLESTATE_SET);							// config mode PWM1, enable TIM1_CH1 duty 20% , disable TIM1_CH1N 
+    TIM1_ARRPreloadConfig(ENABLE);						// enable register auto reload active -  over timer -> reset counter
+    TIM1_OC3PreloadConfig(ENABLE);						// enable reload mode output compare - TIM1_CMMR1
+    TIM1_Cmd(ENABLE);								// active timer
+    TIM1_CtrlPWMOutputs(ENABLE);						// active PWM output
+}
+
 void SetupSerialPort()
 {
     //
@@ -261,8 +315,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
     /* Set LED2 */
 
   }
-  Event = I2C_GetLastEvent();
-  switch (Event)
+  switch (I2C_GetLastEvent())
   {
       /******* Slave transmitter ******/
       /* check on EV1 */
@@ -301,14 +354,16 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       /* Check on EV4 */
   case I2C_EVENT_SLAVE_STOP_DETECTED:{
             /* write to CR2 to clear STOPF flag */
+
     if (buf[0] == EXTENSION_GET_EVT_REG){ //INT 
                val = evt_reg;//buf[1] + buf[2];
-               //writing = 1;
-    } else if (buf[0] == EXTENSION_ROTATE_LED_REG)
+               writing = 1;
+    } else if (buf[0] == EXTENSION_ROTATE_LED_REG){
               val =0x1234; //0x12 0x34
-            else if (buf[0] == EXTENSION_ROTATE_LED2_REG)
-              val = 0x5678;
-            
+    }
+    else if (buf[0] == SR04_DIS_DATA_REG){
+              val = sr04_dis_reg;
+    }
             I2C->CR2 |= I2C_CR2_ACK;
   }
       break;
@@ -378,7 +433,11 @@ void init_tim2()
         uint8_t cm [2];// =0;// (stop-start)/58;
         cm[1]=0x00;cm[0]=0x00;
         cm[0] = (stop-start)/58;
-        Printf(&cm[0]);//Printf("\n");
+        sr04_dis_reg = cm[0];
+        GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
+        Delay(0x000F); 
+        GPIO_WriteLow(GPIOC,GPIO_PIN_5);
+        //Printf(&cm[0]);Printf("\n");
        // printf("%uus %ucm\r\n", (stop-start), (stop-start)/58);
         //LED_PORT->ODR |= LED_PIN; // LED off
         TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
