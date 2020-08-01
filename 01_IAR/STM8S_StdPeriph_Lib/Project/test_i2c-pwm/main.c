@@ -298,7 +298,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
   case I2C_EVENT_SLAVE_STOP_DETECTED:{
             /* write to CR2 to clear STOPF flag */
     if (buf[0] == EXTENSION_GET_EVT_REG){ //INT 
-               val = evt_reg;//buf[1] + buf[2];
+               val = 0x5678;//buf[1] + buf[2]+5;
                //writing = 1;
     } else if (buf[0] == EXTENSION_ROTATE_LED_REG)
               val =0x1234; //0x12 0x34
