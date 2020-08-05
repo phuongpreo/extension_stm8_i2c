@@ -52,9 +52,10 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
   /* Private variables ---------------------------------------------------------*/
-//__IO uint8_t Slave_Buffer_Rx[6];//255
+__IO uint8_t Slave_Buffer_Rx[6];//255
 __IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
 __IO uint16_t Event = 0x00;
+volatile bool is_stop=FALSE;
 
 volatile uint8_t *read_p;
 volatile uint8_t *write_p;
@@ -94,7 +95,7 @@ void main(void)
 
 
   SetupSerialPort();
-  Printf("Hello\n");
+  Printf("i2c-pwm\n");
   /* TIM2 Peripheral Configuration */ 
   TIM2_DeInit();
 
@@ -120,20 +121,26 @@ void main(void)
   while (1)
   {
     /* infinite loop */
-   
- 
+    if(is_stop){
+      Printf((char*)Slave_Buffer_Rx[0]);
+      Printf("--");
+      Printf((char*)Slave_Buffer_Rx[1]);
+      Printf("\n");
+      is_stop=FALSE;
+    }
+/* 
     evt_reg++;Printf("Send:");char reg = evt_reg;Printf(&reg);Printf("\n");
     GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
     Delay(0x00FF); 
     GPIO_WriteLow(GPIOC,GPIO_PIN_5);
-
+*/
 /*
     TRIG_PORT->ODR |= TRIG_PIN; // TRIG high
     for(volatile int8_t i = 0; i < 5; i++);
     TRIG_PORT->ODR &= ~(TRIG_PIN); // TRIG low
     TIM2->CR1 |= TIM2_CR1_CEN; // start timer 2
 */
-    for(int i = 0; i < 100; i++)Delay(0xFFFF); 
+    //for(int i = 0; i < 100; i++)Delay(0xFFFF); 
   }
 }
 
@@ -268,6 +275,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       write_p = ((volatile uint8_t *)(&val) + 1);
       writing = 2;
       //Tx_Idx = 0;
+      Rx_Idx=0;
       break;
 
       /* check on EV3 */
@@ -285,18 +293,21 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
 
       /* Check on EV2*/
     case I2C_EVENT_SLAVE_BYTE_RECEIVED:
-      //Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData();
+      Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData();
        //ignore more than 3 bytes reading
+/*
         if (reading > 3)
           return;
         //read bytes from slave
         *read_p++ = I2C_ReceiveData();
         reading++;
+*/
       break;
 
       /* Check on EV4 */
   case I2C_EVENT_SLAVE_STOP_DETECTED:{
             /* write to CR2 to clear STOPF flag */
+/*
     if (buf[0] == EXTENSION_GET_EVT_REG){ //INT 
                val = 0x5678;//buf[1] + buf[2]+5;
                //writing = 1;
@@ -304,7 +315,8 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
               val =0x1234; //0x12 0x34
             else if (buf[0] == SR04_DIS_DATA_REG)
               val = sr04_dis_reg;
-            
+*/          
+    is_stop = TRUE;
             I2C->CR2 |= I2C_CR2_ACK;
   }
       break;

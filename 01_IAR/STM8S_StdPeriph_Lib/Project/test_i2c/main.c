@@ -54,6 +54,8 @@
 //__IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
 //__IO uint16_t Event = 0x00;
 volatile bool is_stop =FALSE;
+volatile bool Rx_Add_MATCHED =FALSE;
+
 
 volatile uint8_t *read_p;
 volatile uint8_t *write_p;
@@ -143,14 +145,22 @@ void main(void)
 //if(c%30==0)    ServoSetAngle(90);
     
 
-/*
-    //evt_reg++;Printf("Send:");char reg = evt_reg;Printf(&reg);Printf("\n");
+
+    //evt_reg++;Printf("Send:");
+
     GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
     Delay(0x00FF); 
     GPIO_WriteLow(GPIOC,GPIO_PIN_5);
-    Delay_ms(2000);
- */ 
-
+    Delay_ms(100);
+    if(is_stop){
+    char reg = reading+0x30;
+    Printf("len:");Printf(&reg);
+    Printf("\n");
+    is_stop=FALSE;
+    }
+//    Delay_ms(1000);
+ 
+/*
     TRIG_PORT->ODR |= TRIG_PIN; // TRIG high
     for(volatile int8_t i = 0; i < 5; i++);
     TRIG_PORT->ODR &= ~(TRIG_PIN); // TRIG low
@@ -159,7 +169,7 @@ void main(void)
       Delay_ms(200); 
       c++;
     }
-
+*/
   }
 }
 
@@ -337,15 +347,20 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       /******* Slave receiver **********/
       /* check on EV1*/
     case I2C_EVENT_SLAVE_RECEIVER_ADDRESS_MATCHED:
-        //Rx_Add_MATCHED=TRUE;
+           Rx_Add_MATCHED=TRUE;
+            reading = 0;
+            read_p = buf;
       break;
 
       /* Check on EV2*/
     case I2C_EVENT_SLAVE_BYTE_RECEIVED:
       //Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData();
        //ignore more than 3 bytes reading
-        if (reading > 3)
-          return;
+//      if (reading > 3){
+//        reading=0;
+//       read_p=buf;
+//        return;
+//      }
         //read bytes from slave
         *read_p++ = I2C_ReceiveData();
         reading++;
@@ -359,11 +374,15 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
                val = evt_reg;//buf[1] + buf[2];
                writing = 1;
     } else if (buf[0] == EXTENSION_ROTATE_LED_REG){
-              val =0x1234; //0x12 0x34
+              //val =0x1234; //0x12 0x34
+              evt_reg = buf[1];
     }
     else if (buf[0] == SR04_DIS_DATA_REG){
               val = sr04_dis_reg;
+    } else if (buf[0] == 0x06) { //con lai la set value
+      is_stop=TRUE;
     }
+
             I2C->CR2 |= I2C_CR2_ACK;
   }
       break;
@@ -437,9 +456,9 @@ void init_tim2()
         GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
         Delay(0x000F); 
         GPIO_WriteLow(GPIOC,GPIO_PIN_5);
-        //Printf(&cm[0]);Printf("\n");
-       // printf("%uus %ucm\r\n", (stop-start), (stop-start)/58);
-        //LED_PORT->ODR |= LED_PIN; // LED off
+        // Printf(&cm[0]);Printf("\n");
+        // printf("%uus %ucm\r\n", (stop-start),(stop-start)/58);
+        // LED_PORT->ODR |= LED_PIN; // LED off
         TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
     }
 
