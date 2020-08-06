@@ -211,15 +211,15 @@ NRF_LOG_INFO("Heloooooo");NRF_LOG_FLUSH();
       }
 
 
-//      nrf_drv_mpu_read_registers(GET_SERVO_ANGLE_REG,p,1);
-//      NRF_LOG_INFO("p0=%x ->%d cm",p[0],p[0]);
-//       p[0] = 0x00;
-////      nrf_drv_mpu_write_registers(CONFIG,p_tx,3);
-//      nrf_delay_ms(2000);
-//      if(config_value==90)config_value=0;
-//      config_value+=10;
-//      nrf_drv_mpu_write_single_register(SET_SERVO_ANGLE_REG,config_value);
-//      nrf_delay_ms(2000);
+      nrf_drv_mpu_read_registers(GET_SERVO_ANGLE_REG,p,1);
+      NRF_LOG_INFO("angle=%x ->%d cm",p[0],p[0]);
+       p[0] = 0x00;
+//      nrf_drv_mpu_write_registers(CONFIG,p_tx,3);
+      nrf_delay_ms(500);
+      if(config_value==90)config_value=0;
+      config_value+=10;
+      nrf_drv_mpu_write_single_register(SET_SERVO_ANGLE_REG,config_value);
+      nrf_delay_ms(500);
 
       NRF_LOG_FLUSH();
     };

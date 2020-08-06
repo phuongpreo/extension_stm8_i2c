@@ -139,7 +139,7 @@ void main(void)
     
   I2C_Cmd(ENABLE);
   init_tim2();
-  //Timer1_PWM_Configuration();
+  Timer1_PWM_Configuration();
   /* Enable general interrupts */
   enableInterrupts();
 
@@ -409,7 +409,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       break;
     case SET_SERVO_ANGLE_REG:
       _servo_angle = buf[1];
-      
+      ServoSetAngle(_servo_angle);
       break;
     default:
       break;
