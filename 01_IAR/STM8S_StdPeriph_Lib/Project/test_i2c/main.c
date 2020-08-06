@@ -42,11 +42,15 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define EXTENSION_SET_REG 0x01
-#define EXTENSION_GET_EVT_REG 0x02
-#define EXTENSION_ROTATE_LED_REG 0x10
-#define EXTENSION_ROTATE_LED2_REG 0x11
-#define SR04_DIS_DATA_REG 0x12
+#define GET_CONFIG_REG 0x1E
+#define GET_TYPE_DEVICE_REG 0x1F
+#define GET_EVT_REG 0x20
+#define GET_SR04_DIS_DATA_REG 0x21
+#define GET_SERVO_ANGLE_REG 0x23
+
+#define SET_CONFIG_REG 0x9E
+#define SET_SERVO_ANGLE_REG 0xA3
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
   /* Private variables ---------------------------------------------------------*/
@@ -55,7 +59,7 @@
 //__IO uint16_t Event = 0x00;
 volatile bool is_stop =FALSE;
 volatile bool Rx_Add_MATCHED =FALSE;
-
+volatile bool Tx_Add_MATCHED =FALSE;
 
 volatile uint8_t *read_p;
 volatile uint8_t *write_p;
@@ -64,10 +68,18 @@ volatile uint8_t reading;
 
 
 volatile uint8_t buf[3];
-volatile uint16_t val;
-volatile uint8_t evt_reg = 0x64;
+volatile uint8_t val;
+/*register*/
+#define KODIMO 0x40
+#define LED_SERVO_EXTENSION 0x01
+volatile uint8_t _evt_reg = 0x00;
+volatile uint8_t _sr04_dis_reg=0x00;
+volatile uint8_t _config = 0x00;
+volatile uint8_t _servo_angle = 0x00;
+const uint8_t _type_device_reg = KODIMO|LED_SERVO_EXTENSION; 
 
-volatile uint8_t sr04_dis_reg=0x00;
+
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /* Public functions ----------------------------------------------------------*/
@@ -141,35 +153,41 @@ void main(void)
 //      Printf("rec\n");
 //      is_stop=FALSE;
 //    }
-//if(c%20==0)    ServoSetAngle(10);
-//if(c%30==0)    ServoSetAngle(90);
-    
+    /*
+    if(c==1000)    {
+      ServoSetAngle(_servo_angle);
+    }
+    if(c==1999)    {
+      ServoSetAngle(_servo_angle);
+    }
+    */
 
 
     //evt_reg++;Printf("Send:");
-
+/*
     GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
     Delay(0x00FF); 
     GPIO_WriteLow(GPIOC,GPIO_PIN_5);
     Delay_ms(100);
     if(is_stop){
-    char reg = reading+0x30;
-    Printf("len:");Printf(&reg);
-    Printf("\n");
-    is_stop=FALSE;
+      char reg = reading+0x30;
+      Printf("len:");Printf(&reg);
+      Printf("\n");
+      is_stop=FALSE;
     }
-//    Delay_ms(1000);
- 
-/*
-    TRIG_PORT->ODR |= TRIG_PIN; // TRIG high
-    for(volatile int8_t i = 0; i < 5; i++);
-    TRIG_PORT->ODR &= ~(TRIG_PIN); // TRIG low
-    TIM2->CR1 |= TIM2_CR1_CEN; // start timer 2
-    for(int i = 0; i < 1; i++){
-      Delay_ms(200); 
-      c++;
-    }
+    Delay_ms(1000);
 */
+    Delay_ms(1);
+    c++;
+    if(c%200==0){
+        Printf(".");
+        TRIG_PORT->ODR |= TRIG_PIN; // TRIG high
+        for(volatile int8_t i = 0; i < 5; i++);
+        TRIG_PORT->ODR &= ~(TRIG_PIN); // TRIG low
+        TIM2->CR1 |= TIM2_CR1_CEN; // start timer 2
+    }
+    if(c==2000) {c=0;Printf("\n");}
+
   }
 }
 
@@ -327,13 +345,14 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
   }
   switch (I2C_GetLastEvent())
   {
-      /******* Slave transmitter ******/
+      /******* Slave transmitter ******/ //tuong duong voi i2c master read data
       /* check on EV1 */
     case I2C_EVENT_SLAVE_TRANSMITTER_ADDRESS_MATCHED:
+      Tx_Add_MATCHED=TRUE;
       reading = 0;
       read_p = buf;
-      write_p = ((volatile uint8_t *)(&val) + 1);
-      writing = 2;
+      write_p = ((volatile uint8_t *)(&val) + 0);//((volatile uint8_t *)(&val) + 1); Dung cho val =16 byte
+      writing = 1;
       //Tx_Idx = 0;
       break;
 
@@ -344,10 +363,10 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       I2C_SendData(*write_p--);
       writing--;
       break;
-      /******* Slave receiver **********/
+      /******* Slave receiver **********///master write data
       /* check on EV1*/
     case I2C_EVENT_SLAVE_RECEIVER_ADDRESS_MATCHED:
-           Rx_Add_MATCHED=TRUE;
+            Rx_Add_MATCHED = TRUE;
             reading = 0;
             read_p = buf;
       break;
@@ -369,24 +388,48 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       /* Check on EV4 */
   case I2C_EVENT_SLAVE_STOP_DETECTED:{
             /* write to CR2 to clear STOPF flag */
-
+    switch(buf[0]){
+    case GET_CONFIG_REG:
+      val = _config;
+      break;
+    case GET_TYPE_DEVICE_REG:
+      val = _type_device_reg;
+      break;
+    case GET_EVT_REG:
+      val = _evt_reg;
+      break;
+    case GET_SR04_DIS_DATA_REG:
+      val = _sr04_dis_reg;
+      break;
+    case GET_SERVO_ANGLE_REG:
+      val = _servo_angle;
+      break;
+    case SET_CONFIG_REG:
+      _config = buf[1];
+      break;
+    case SET_SERVO_ANGLE_REG:
+      _servo_angle = buf[1];
+      
+      break;
+    default:
+      break;
+    }
+ /*
     if (buf[0] == EXTENSION_GET_EVT_REG){ //INT 
                val = evt_reg;//buf[1] + buf[2];
-               writing = 1;
     } else if (buf[0] == EXTENSION_ROTATE_LED_REG){
               //val =0x1234; //0x12 0x34
               evt_reg = buf[1];
     }
     else if (buf[0] == SR04_DIS_DATA_REG){
               val = sr04_dis_reg;
-    } else if (buf[0] == 0x06) { //con lai la set value
+    } else if (buf[0] >= 0x80) { //con lai la set value
       is_stop=TRUE;
     }
-
+*/
             I2C->CR2 |= I2C_CR2_ACK;
   }
       break;
-
     default:
       break;
   }
@@ -452,11 +495,11 @@ void init_tim2()
         uint8_t cm [2];// =0;// (stop-start)/58;
         cm[1]=0x00;cm[0]=0x00;
         cm[0] = (stop-start)/58;
-        sr04_dis_reg = cm[0];
+        _sr04_dis_reg = cm[0]+50;
         GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
         Delay(0x000F); 
         GPIO_WriteLow(GPIOC,GPIO_PIN_5);
-        // Printf(&cm[0]);Printf("\n");
+//         Printf((char*)&_sr04_dis_reg);Printf("\n");
         // printf("%uus %ucm\r\n", (stop-start),(stop-start)/58);
         // LED_PORT->ODR |= LED_PIN; // LED off
         TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2

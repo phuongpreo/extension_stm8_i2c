@@ -180,36 +180,47 @@ int main(void)
     NRF_LOG_INFO("111");
     NRF_LOG_FLUSH();
     //Set Commands
-#define EXTENSION_SET_REG 0x01
-//GET commands
-#define EXTENSION_GET_EVT_REG 0x02
-#define EXTENSION_ROTATE_LED_REG 0x10
-#define EXTENSION_ROTATE_LED2_REG 0x11
-#define SR04_DIS_DATA_REG 0x12
+
+#define GET_CONFIG_REG 0x1E
+#define GET_TYPE_DEVICE_REG 0x1F
+#define GET_EVT_REG 0x20
+#define GET_SR04_DIS_DATA_REG 0x21
+#define GET_SERVO_ANGLE_REG 0x23
+
+#define SET_CONFIG_REG 0x9E
+#define SET_SERVO_ANGLE_REG 0xA3
+
+#define KODIMO 0x40
+#define LED_SERVO_EXTENSION 0x01
+
 NRF_LOG_INFO("Heloooooo");NRF_LOG_FLUSH();
     uint8_t p[1] = {0x00};
     uint8_t p_tx[3] ={0x50,0x60,0x65};
+    uint8_t config_value = 10;
+    nrf_drv_mpu_read_registers(GET_TYPE_DEVICE_REG,p,1);
+    NRF_LOG_INFO("TYPE_DEVICE_REG=%x",p[0]);
+    NRF_LOG_INFO("%s from %s",(p[0]&0x3F)==LED_SERVO_EXTENSION?"LED_SERVO_EXTENSION":"Unknow",(p[0]&0xC0)==KODIMO?"KODIMO":"Unknow");
     while (true)
     {
 //      scan_address();
 
-//      if(is_irq_extension){
-//        nrf_drv_mpu_read_registers(EXTENSION_GET_EVT_REG,p,1);
-//        NRF_LOG_INFO("p0=%x ->%d cm",p[0],p[0]);
-////         NRF_LOG_INFO("p1=%d",p[0]); 
-//        is_irq_extension=false;
-//      }
+      if(is_irq_extension){
+        nrf_drv_mpu_read_registers(GET_SR04_DIS_DATA_REG,p,1);
+        NRF_LOG_INFO("Dis:p0=%x ->%d cm",p[0],p[0]);
+        is_irq_extension=false;
+      }
 
-      nrf_drv_mpu_write_registers(0x06,p_tx,3);
- //      p_tx[0]= p_tx[0]+1;
-//      p_tx[1]= p_tx[1]+1;
-      nrf_delay_ms(2000);
-//      nrf_drv_mpu_read_registers(EXTENSION_ROTATE_LED_REG,p,2);
-//      nrf_delay_ms(20);
-      nrf_drv_mpu_write_single_register(0x61,0x62);
-//      NRF_LOG_INFO("p=%x",p[0]); 
-//      NRF_LOG_INFO("p=%x",p[13]);
-      nrf_delay_ms(2000);
+
+//      nrf_drv_mpu_read_registers(GET_SERVO_ANGLE_REG,p,1);
+//      NRF_LOG_INFO("p0=%x ->%d cm",p[0],p[0]);
+//       p[0] = 0x00;
+////      nrf_drv_mpu_write_registers(CONFIG,p_tx,3);
+//      nrf_delay_ms(2000);
+//      if(config_value==90)config_value=0;
+//      config_value+=10;
+//      nrf_drv_mpu_write_single_register(SET_SERVO_ANGLE_REG,config_value);
+//      nrf_delay_ms(2000);
+
       NRF_LOG_FLUSH();
     };
 
