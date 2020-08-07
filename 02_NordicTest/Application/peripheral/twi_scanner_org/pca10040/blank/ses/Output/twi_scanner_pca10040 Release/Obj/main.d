@@ -80,4 +80,8 @@ Output/twi_scanner_pca10040\ Release/Obj/main.o: \
  ../../../../../../integration/nrfx/legacy/nrf_drv_i2s.h \
  ../../../../../../modules/nrfx/drivers/include/nrfx_i2s.h \
  ../../../../../../modules/nrfx/hal/nrf_i2s.h \
- ../../../../../../components/libraries/delay/nrf_delay.h
+ ../../../../../../components/libraries/delay/nrf_delay.h \
+ ../../../../../../components/libraries/bsp/bsp.h \
+ ../../../../../../components/libraries/button/app_button.h \
+ ../../../../../../components/libraries/timer/app_timer.h \
+ ../../../../../../components/libraries/sortlist/nrf_sortlist.h

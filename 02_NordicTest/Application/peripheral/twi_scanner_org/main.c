@@ -60,6 +60,12 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 #include "nrf_ws2812.h"
+#include "boards.h"
+#include "bsp.h"
+#include "app_timer.h"
+
+APP_TIMER_DEF(m_repeat_id);  /**< Handler for single shot timer used to light LED 2. */
+
 ///* TWI instance ID. */
 //#if TWI0_ENABLED
 //#define TWI_INSTANCE_ID     0
@@ -132,54 +138,8 @@
 //    nrf_drv_twi_enable(&m_twi);
 //}
 
-#define PIN_IN BSP_BUTTON_0
+#define PIN_IN 12
 #define PIN_OUT BSP_LED_0
-volatile bool is_irq_extension =false;
-void in_pin_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
-{
-    nrf_drv_gpiote_out_toggle(PIN_OUT);
-    is_irq_extension = true;
-}
-
-
-/**
- * @brief Function for main application entry.
- */
-int main(void)
-{
-    ret_code_t err_code;
-
-
-    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
-    NRF_LOG_INFO("TWI scanner started.");
-    NRF_LOG_FLUSH();
-
-    err_code = nrf_drv_gpiote_init();
-    APP_ERROR_CHECK(err_code);
-
-
-    nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(false);
-
-    err_code = nrf_drv_gpiote_out_init(PIN_OUT, &out_config);
-    APP_ERROR_CHECK(err_code);
-
-
-
-    nrf_drv_gpiote_in_config_t in_config = GPIOTE_CONFIG_IN_SENSE_LOTOHI(false);
-    in_config.pull = NRF_GPIO_PIN_PULLUP;
-
-    err_code = nrf_drv_gpiote_in_init(PIN_IN, &in_config, in_pin_handler);
-    APP_ERROR_CHECK(err_code);
-
-    nrf_drv_gpiote_in_event_enable(PIN_IN, true);
-
-
-    nrf_drv_mpu_init();
-    NRF_LOG_INFO("111");
-    NRF_LOG_FLUSH();
-    //Set Commands
 
 #define GET_CONFIG_REG 0x1E
 #define GET_TYPE_DEVICE_REG 0x1F
@@ -193,34 +153,191 @@ int main(void)
 #define KODIMO 0x40
 #define LED_SERVO_EXTENSION 0x01
 
-NRF_LOG_INFO("Heloooooo");NRF_LOG_FLUSH();
-    uint8_t p[1] = {0x00};
-    uint8_t p_tx[3] ={0x50,0x60,0x65};
-    uint8_t config_value = 10;
-    nrf_drv_mpu_read_registers(GET_TYPE_DEVICE_REG,p,1);
-    NRF_LOG_INFO("TYPE_DEVICE_REG=%x",p[0]);
-    NRF_LOG_INFO("%s from %s",(p[0]&0x3F)==LED_SERVO_EXTENSION?"LED_SERVO_EXTENSION":"Unknow",(p[0]&0xC0)==KODIMO?"KODIMO":"Unknow");
+uint8_t angle_value = 10;
+volatile bool is_irq_extension =false;
+volatile bool is_write_servo  =false;
+uint8_t evt[1] = {0x00};
+void in_pin_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
+{
+    nrf_drv_gpiote_out_toggle(PIN_OUT);
+    nrf_drv_mpu_read_registers(GET_EVT_REG,evt,1);
+    is_irq_extension = true;
+}
+static void btn1_event_handler(){
+                NRF_LOG_INFO("btn 1");
+                angle_value+=10;
+                is_write_servo = true;
+}
+static void btn2_event_handler(){
+                 NRF_LOG_INFO("btn 2");
+                 angle_value-=10;
+                 is_write_servo = true;
+}
+static void btn3_event_handler(){
+                is_irq_extension = true;
+                evt[0] = 0x01;
+}
+static void bsp_evt_handler(bsp_event_t evt)
+{
+
+    switch (evt)
+    {
+    //ned implemt enable driver car mode, stop car .....
+        case BSP_EVENT_KEY_0:{
+                NRF_LOG_INFO("Push 1");
+                angle_value+=10;
+                is_write_servo = true;
+            }  
+            break;
+        case BSP_EVENT_KEY_1:{
+                  NRF_LOG_INFO("release 1");
+
+                }
+        break;
+        case BSP_EVENT_KEY_2:{
+                  NRF_LOG_INFO("Push 2");
+                  angle_value-=10;
+                  is_write_servo = true;
+                }
+            break;
+        case BSP_EVENT_KEY_3:{
+                  NRF_LOG_INFO("release 2");
+                }
+            break;
+        default:
+        break;
+     }
+}
+static void repeat_timer_handler(void * p_context)
+{
+            uint8_t distance[1] = {0x00};
+            uint8_t angle[1] = {0x00};
+            nrf_drv_mpu_read_registers(GET_SR04_DIS_DATA_REG,distance,1);
+            nrf_drv_mpu_read_registers(GET_SERVO_ANGLE_REG,angle,1);
+            NRF_LOG_INFO("Distance:p0=%d cm angle:%d",distance[0],angle[0]);
+}
+void button_init(){
+    uint32_t err_code;
+
+    err_code = bsp_init(BSP_INIT_BUTTONS, bsp_evt_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_event_to_button_action_assign(1,
+                                                 BSP_BUTTON_ACTION_PUSH,
+                                                 BSP_EVENT_KEY_0);
+    APP_ERROR_CHECK(err_code);
+    err_code = bsp_event_to_button_action_assign(1,
+                                                 BSP_BUTTON_ACTION_RELEASE,
+                                                 BSP_EVENT_KEY_1);
+
+    err_code = bsp_event_to_button_action_assign(2,
+                                                 BSP_BUTTON_ACTION_PUSH,
+                                                 BSP_EVENT_KEY_2);
+    APP_ERROR_CHECK(err_code);
+    err_code = bsp_event_to_button_action_assign(2,
+                                                 BSP_BUTTON_ACTION_RELEASE,
+                                                 BSP_EVENT_KEY_3);
+
+    APP_ERROR_CHECK(err_code);
+}
+/**
+ * @brief Function for main application entry.
+ */
+int main(void)
+{
+    ret_code_t err_code;
+
+
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("TWI scanner started.");
+    NRF_LOG_FLUSH();
+//    err_code = app_timer_init();
+//    APP_ERROR_CHECK(err_code);
+//    button_init();
+
+    err_code = nrf_drv_gpiote_init();
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(false);
+
+    err_code = nrf_drv_gpiote_out_init(PIN_OUT, &out_config);
+    APP_ERROR_CHECK(err_code);
+
+
+
+    nrf_drv_gpiote_in_config_t in_config = GPIOTE_CONFIG_IN_SENSE_LOTOHI(false);
+    in_config.pull = NRF_GPIO_PIN_PULLDOWN;
+
+    err_code = nrf_drv_gpiote_in_init(PIN_IN, &in_config, in_pin_handler);
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_gpiote_in_event_enable(PIN_IN, true);
+
+    nrf_drv_gpiote_in_config_t config_button = GPIOTE_CONFIG_IN_SENSE_HITOLO(false);
+    config_button.pull = NRF_GPIO_PIN_PULLUP;
+
+    err_code = nrf_drv_gpiote_in_init(BUTTON_1, &config_button, btn1_event_handler);APP_ERROR_CHECK(err_code);
+    err_code = nrf_drv_gpiote_in_init(BUTTON_2, &config_button, btn2_event_handler);APP_ERROR_CHECK(err_code);
+    err_code = nrf_drv_gpiote_in_init(BUTTON_3, &config_button, btn3_event_handler);APP_ERROR_CHECK(err_code);
+
+    nrf_drv_gpiote_in_event_enable(BUTTON_1, true);
+    nrf_drv_gpiote_in_event_enable(BUTTON_2, true);
+    nrf_drv_gpiote_in_event_enable(BUTTON_3, true);
+
+    nrf_drv_mpu_init();
+    NRF_LOG_INFO("111");
+    NRF_LOG_FLUSH();
+    //Set Commands
+
+
+    NRF_LOG_INFO("Heloooooo");NRF_LOG_FLUSH();
+
+    uint8_t typeDevice[0]={0x00};
+    nrf_drv_mpu_read_registers(GET_TYPE_DEVICE_REG,typeDevice,1);
+    NRF_LOG_INFO("TYPE_DEVICE_REG=%x",typeDevice[0]);
+    NRF_LOG_INFO("%s from %s",(typeDevice[0]&0x3F)==LED_SERVO_EXTENSION?"LED_SERVO_EXTENSION":"Unknow",(typeDevice[0]&0xC0)==KODIMO?"KODIMO":"Unknow");
+
+//    err_code = app_timer_create(&m_repeat_id,APP_TIMER_MODE_REPEATED,repeat_timer_handler);
+//    APP_ERROR_CHECK(err_code);
+//
+//    err_code = app_timer_start(m_repeat_id, APP_TIMER_TICKS(500), NULL);
+//    APP_ERROR_CHECK(err_code);
     while (true)
     {
 //      scan_address();
 
       if(is_irq_extension){
-        nrf_drv_mpu_read_registers(GET_SR04_DIS_DATA_REG,p,1);
-        NRF_LOG_INFO("Dis:p0=%x ->%d cm",p[0],p[0]);
+        switch(evt[0]){
+        case 0x01:{
+            uint8_t distance[1] = {0x00};
+            uint8_t angle[1] = {0x00};
+            nrf_drv_mpu_read_registers(GET_SR04_DIS_DATA_REG,distance,1);
+            nrf_drv_mpu_read_registers(GET_SERVO_ANGLE_REG,angle,1);
+            NRF_LOG_INFO("Distance:p0=%d cm angle:%d",distance[0],angle[0]);
+          }
+          break;
+        default:
+            NRF_LOG_INFO("Unknow evt");
+          break;
+        }
         is_irq_extension=false;
       }
 
 
-      nrf_drv_mpu_read_registers(GET_SERVO_ANGLE_REG,p,1);
-      NRF_LOG_INFO("angle=%x ->%d cm",p[0],p[0]);
-       p[0] = 0x00;
-//      nrf_drv_mpu_write_registers(CONFIG,p_tx,3);
-      nrf_delay_ms(500);
-      if(config_value==90)config_value=0;
-      config_value+=10;
-      nrf_drv_mpu_write_single_register(SET_SERVO_ANGLE_REG,config_value);
-      nrf_delay_ms(500);
+//      nrf_drv_mpu_read_registers(GET_SERVO_ANGLE_REG,p,1);
+//      NRF_LOG_INFO("angle=%x ->%d cm",p[0],p[0]);
+//      p[0] = 0x00;
 
+//      nrf_drv_mpu_write_registers(CONFIG,p_tx,3);
+      if(is_write_servo){
+            NRF_LOG_INFO("angle_value:%d",angle_value);
+            if(angle_value > 180) angle_value = 180;
+            if(angle_value < 10) angle_value = 10;
+            nrf_drv_mpu_write_single_register(SET_SERVO_ANGLE_REG,angle_value);
+            is_write_servo=false;
+      }
       NRF_LOG_FLUSH();
     };
 

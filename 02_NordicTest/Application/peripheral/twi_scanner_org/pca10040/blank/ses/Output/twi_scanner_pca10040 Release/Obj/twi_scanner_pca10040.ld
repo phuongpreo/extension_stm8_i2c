@@ -18,8 +18,8 @@ SECTIONS
   __STACKSIZE_PROCESS__ = 0;
   __STACKSIZE__ = 8192;
 
-  __vectors_ram_load_start__ = 0x20000000;
-  .vectors_ram 0x20000000 (NOLOAD) : AT(0x20000000)
+  __vectors_ram_load_start__ = 0x20007980;
+  .vectors_ram 0x20007980 (NOLOAD) : AT(0x20007980)
   {
     __vectors_ram_start__ = .;
     __app_ram_start__ =   __vectors_ram_start__;
@@ -44,8 +44,8 @@ SECTIONS
 
   . = ASSERT(__nrf_sections_run_start__ == __nrf_sections_run_end__ || (__nrf_sections_run_end__ - __RAM_segment_start__) <= __RAM_segment_size__ , "error: .nrf_sections_run is too large to fit in RAM memory segment");
 
-  __vectors_load_start__ = 0x0;
-  .vectors 0x0 : AT(0x0)
+  __vectors_load_start__ = 0x26000;
+  .vectors 0x26000 : AT(0x26000)
   {
     __vectors_start__ = .;
     *(.vectors .vectors.*)

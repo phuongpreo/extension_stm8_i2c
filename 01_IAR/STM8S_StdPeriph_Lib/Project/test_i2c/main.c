@@ -57,6 +57,7 @@
 //__IO uint8_t Slave_Buffer_Rx[6];//255
 //__IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
 //__IO uint16_t Event = 0x00;
+volatile bool is_done_mean_dis = TRUE;
 volatile bool is_stop =FALSE;
 volatile bool Rx_Add_MATCHED =FALSE;
 volatile bool Tx_Add_MATCHED =FALSE;
@@ -143,7 +144,7 @@ void main(void)
   /* Enable general interrupts */
   enableInterrupts();
 
-
+  ServoSetAngle(0);
   /*Main Loop */
   int16_t c =0;
   while (1)
@@ -177,6 +178,7 @@ void main(void)
     }
     Delay_ms(1000);
 */
+
     Delay_ms(1);
     c++;
     if(c%200==0){
@@ -188,6 +190,15 @@ void main(void)
     }
     if(c==2000) {c=0;Printf("\n");}
 
+    /*
+    if(is_done_mean_dis){
+        TRIG_PORT->ODR |= TRIG_PIN; // TRIG high
+        for(volatile int8_t i = 0; i < 5; i++);
+        TRIG_PORT->ODR &= ~(TRIG_PIN); // TRIG low
+        TIM2->CR1 |= TIM2_CR1_CEN; // start timer 2
+        is_done_mean_dis=FALSE;
+    }
+    */
   }
 }
 
@@ -262,13 +273,13 @@ void Printf(char *message)
 }
 //Setup PWM Servo
 void ServoSetAngle(uint8_t angle){
-  TIM1_SetCompare3(angle*100);//1000-10000 : 0-100
+  TIM1_SetCompare3(angle*40+360);//1000-10000 : 0-100
 }
 void Timer1_PWM_Configuration(void)
 {
     TIM1_DeInit();								// reset all register timer1
     CLK_PeripheralClockConfig(CLK_PERIPHERAL_TIMER1, ENABLE);	                // provide clock for timer1
-    TIM1_TimeBaseInit(1,TIM1_COUNTERMODE_UP, 40000,0);			// config frequency interrupt PSC= 15999+1 =16000, ARR = 1000 -> F_interrupt = 16*10^6 / 1/40000 = 1Hz = 1s
+    TIM1_TimeBaseInit(4,TIM1_COUNTERMODE_UP, 39999,0);			// config frequency interrupt PSC= 15999+1 =16000, ARR = 1000 -> F_interrupt = 16*10^6 / 1/40000 = 1Hz = 1s
     TIM1_OC3Init(TIM1_OCMODE_PWM1, TIM1_OUTPUTSTATE_ENABLE, TIM1_OUTPUTNSTATE_DISABLE,
     3000, TIM1_OCPOLARITY_HIGH, TIM1_OCNPOLARITY_HIGH, TIM1_OCIDLESTATE_SET,
     TIM1_OCNIDLESTATE_SET);							// config mode PWM1, enable TIM1_CH1 duty 20% , disable TIM1_CH1N 
@@ -496,15 +507,16 @@ void init_tim2()
         cm[1]=0x00;cm[0]=0x00;
         cm[0] = (stop-start)/58;
         _sr04_dis_reg = cm[0]+50;
-        GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
-        Delay(0x000F); 
-        GPIO_WriteLow(GPIOC,GPIO_PIN_5);
+        _evt_reg = 0x01;
+//        GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
+//        Delay(0x000F); 
+//        GPIO_WriteLow(GPIOC,GPIO_PIN_5);
 //         Printf((char*)&_sr04_dis_reg);Printf("\n");
         // printf("%uus %ucm\r\n", (stop-start),(stop-start)/58);
         // LED_PORT->ODR |= LED_PIN; // LED off
         TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
+        is_done_mean_dis  =TRUE;
     }
-
     // clear all flags
     TIM2->SR1 = 0;
 }

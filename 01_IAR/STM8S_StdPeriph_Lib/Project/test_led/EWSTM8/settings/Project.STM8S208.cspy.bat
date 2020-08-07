@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\02_Ultrasonic\Xoay\IAR\en.stsw-stm8069\STM8S_StdPeriph_Lib\Project\test_led\EWSTM8\settings\Project.STM8S208.general.xcl" --backend -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\02_Ultrasonic\Xoay\IAR\en.stsw-stm8069\STM8S_StdPeriph_Lib\Project\test_led\EWSTM8\settings\Project.STM8S208.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\01_IAR\STM8S_StdPeriph_Lib\Project\test_led\EWSTM8\settings\Project.STM8S208.general.xcl" --backend -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\01_IAR\STM8S_StdPeriph_Lib\Project\test_led\EWSTM8\settings\Project.STM8S208.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\02_Ultrasonic\Xoay\IAR\en.stsw-stm8069\STM8S_StdPeriph_Lib\Project\test_led\EWSTM8\settings\Project.STM8S208.general.xcl" "--debug_file=%~1" --backend -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\02_Ultrasonic\Xoay\IAR\en.stsw-stm8069\STM8S_StdPeriph_Lib\Project\test_led\EWSTM8\settings\Project.STM8S208.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\01_IAR\STM8S_StdPeriph_Lib\Project\test_led\EWSTM8\settings\Project.STM8S208.general.xcl" "--debug_file=%~1" --backend -f "D:\2018\KODIMO\Monte\01_Dev\03_Extensions\01_Head\03_Source\03_i2c_stm8\01_IAR\STM8S_StdPeriph_Lib\Project\test_led\EWSTM8\settings\Project.STM8S208.driver.xcl" 
 
 @echo off 
 :end

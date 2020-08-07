@@ -73,7 +73,7 @@ extern "C" {
 #define BUTTON_1       13
 #define BUTTON_2       14
 #define BUTTON_3       15
-#define BUTTON_4       11//org 16
+#define BUTTON_4       16//org 16
 #define BUTTON_STOP    16
 #define BUTTON_PULL    NRF_GPIO_PIN_PULLUP
 
