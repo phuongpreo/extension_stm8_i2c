@@ -506,7 +506,7 @@ void init_tim2()
         uint8_t cm [2];// =0;// (stop-start)/58;
         cm[1]=0x00;cm[0]=0x00;
         cm[0] = (stop-start)/58;
-        _sr04_dis_reg = cm[0]+50;
+        _sr04_dis_reg = cm[0];
         _evt_reg = 0x01;
 //        GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
 //        Delay(0x000F); 

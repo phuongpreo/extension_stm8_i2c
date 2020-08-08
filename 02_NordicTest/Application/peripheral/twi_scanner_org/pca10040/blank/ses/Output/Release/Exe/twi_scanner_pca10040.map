@@ -7383,7 +7383,7 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .comment       0x0000000000000043       0x44 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
  .comment       0x0000000000000043       0x44 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
 
-.debug_line     0x0000000000000000    0x15aeb
+.debug_line     0x0000000000000000    0x15ae9
  .debug_line    0x0000000000000000      0x1ee Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
  .debug_line    0x00000000000001ee      0x6ef Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
  .debug_line    0x00000000000008dd      0x96b Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
@@ -7414,11 +7414,11 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .debug_line    0x000000000000fdf2     0x1ab3 Output/twi_scanner_pca10040 Release/Obj/nrfx_gpiote.o
  .debug_line    0x00000000000118a5      0xeea Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
  .debug_line    0x000000000001278f     0x10c2 Output/twi_scanner_pca10040 Release/Obj/drv_rtc.o
- .debug_line    0x0000000000013851      0xe95 Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_line    0x00000000000146e6       0xb8 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf52.o
- .debug_line    0x000000000001479e       0xda Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf_common.o
- .debug_line    0x0000000000014878      0x637 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
- .debug_line    0x0000000000014eaf      0xc3c Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+ .debug_line    0x0000000000013851      0xe93 Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_line    0x00000000000146e4       0xb8 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf52.o
+ .debug_line    0x000000000001479c       0xda Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf_common.o
+ .debug_line    0x0000000000014876      0x637 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+ .debug_line    0x0000000000014ead      0xc3c Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
 
 .debug_info     0x0000000000000000    0x2f6e7
  .debug_info    0x0000000000000000       0x22 Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o

@@ -333,8 +333,8 @@ int main(void)
 //      nrf_drv_mpu_write_registers(CONFIG,p_tx,3);
       if(is_write_servo){
             NRF_LOG_INFO("angle_value:%d",angle_value);
-            if(angle_value > 180) angle_value = 180;
-            if(angle_value < 10) angle_value = 10;
+            if(angle_value > 80) angle_value = 90;
+            if(angle_value < 10) angle_value = 1;
             nrf_drv_mpu_write_single_register(SET_SERVO_ANGLE_REG,angle_value);
             is_write_servo=false;
       }
