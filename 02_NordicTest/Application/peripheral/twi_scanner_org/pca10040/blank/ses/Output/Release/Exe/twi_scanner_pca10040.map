@@ -6323,7 +6323,7 @@ Linker script and memory map
                 0x0000000000000001                . = ASSERT (((__init_rodata_start__ == __init_rodata_end__) || ((__init_rodata_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .init_rodata is too large to fit in FLASH memory segment)
                 0x00000000000263d0                __text_load_start__ = ALIGN (__init_rodata_end__, 0x4)
 
-.text           0x00000000000263d0     0x3142
+.text           0x00000000000263d0     0x314a
                 0x00000000000263d0                __text_start__ = .
  *(.text .text.* .glue_7t .glue_7 .gnu.linkonce.t.* .gcc_except_table .ARM.extab* .gnu.linkonce.armextab.*)
  .glue_7        0x00000000000263d0        0x0 linker stubs
@@ -6633,66 +6633,66 @@ Linker script and memory map
  .text.btn1_event_handler
                 0x0000000000028cd0       0x3c Output/twi_scanner_pca10040 Release/Obj/main.o
  .text.startup.main
-                0x0000000000028d0c      0x254 Output/twi_scanner_pca10040 Release/Obj/main.o
+                0x0000000000028d0c      0x25c Output/twi_scanner_pca10040 Release/Obj/main.o
                 0x0000000000028d0c                main
  .text.errata_12
-                0x0000000000028f60       0x40 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+                0x0000000000028f68       0x40 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
  .text.errata_16
-                0x0000000000028fa0       0x34 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+                0x0000000000028fa8       0x34 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
  .text.SystemInit
-                0x0000000000028fd4      0x25c Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
-                0x0000000000028fd4                SystemInit
+                0x0000000000028fdc      0x25c Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+                0x0000000000028fdc                SystemInit
  .text.nrf_drv_mpu_twi_event_handler
-                0x0000000000029230       0x28 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+                0x0000000000029238       0x28 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
  .text.nrf_drv_mpu_init
-                0x0000000000029258       0x3c Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
-                0x0000000000029258                nrf_drv_mpu_init
+                0x0000000000029260       0x3c Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+                0x0000000000029260                nrf_drv_mpu_init
  .text.nrf_drv_mpu_write_single_register
-                0x0000000000029294       0x40 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
-                0x0000000000029294                nrf_drv_mpu_write_single_register
+                0x000000000002929c       0x40 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+                0x000000000002929c                nrf_drv_mpu_write_single_register
  .text.nrf_drv_mpu_read_registers
-                0x00000000000292d4       0x6c Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
-                0x00000000000292d4                nrf_drv_mpu_read_registers
+                0x00000000000292dc       0x6c Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+                0x00000000000292dc                nrf_drv_mpu_read_registers
  .text.libc.__RAL_ascii_isctype
-                0x0000000000029340       0x1c C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029348       0x1c C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
  .text.libc.__RAL_ascii_toupper
-                0x000000000002935c        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029364        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
  .text.libc.__RAL_ascii_tolower
-                0x0000000000029368        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029370        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
  .text.libc.__RAL_ascii_iswctype
-                0x0000000000029374       0x1c C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x000000000002937c       0x1c C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
  .text.libc.__RAL_ascii_towupper
-                0x0000000000029390        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029398        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
  .text.libc.__RAL_ascii_towlower
-                0x000000000002939c        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x00000000000293a4        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
  .text.libc.__RAL_ascii_wctomb
-                0x00000000000293a8        0xe C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x00000000000293a8                __RAL_ascii_wctomb
+                0x00000000000293b0        0xe C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x00000000000293b0                __RAL_ascii_wctomb
  .text.libc.__RAL_ascii_mbtowc
-                0x00000000000293b6       0x24 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x00000000000293b6                __RAL_ascii_mbtowc
- *fill*         0x00000000000293da        0x2 
+                0x00000000000293be       0x24 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x00000000000293be                __RAL_ascii_mbtowc
+ *fill*         0x00000000000293e2        0x2 
  .text.libc.__RAL_isctype
-                0x00000000000293dc       0x14 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x00000000000293dc                __RAL_isctype
+                0x00000000000293e4       0x14 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x00000000000293e4                __RAL_isctype
  .text.libc.isprint
-                0x00000000000293f0        0xa C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x00000000000293f0                isprint
+                0x00000000000293f8        0xa C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x00000000000293f8                isprint
  .text.libc.memcpy
-                0x00000000000293fa       0x52 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2_asm.o)
-                0x00000000000293fa                __aeabi_memcpy
-                0x00000000000293fa                memcpy
-                0x0000000000029406                __aeabi_memcpy8
-                0x0000000000029406                __aeabi_memcpy4
+                0x0000000000029402       0x52 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2_asm.o)
+                0x0000000000029402                __aeabi_memcpy
+                0x0000000000029402                memcpy
+                0x000000000002940e                __aeabi_memcpy8
+                0x000000000002940e                __aeabi_memcpy4
  .text.libc.memset
-                0x000000000002944c       0x66 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2_asm.o)
-                0x000000000002944c                memset
+                0x0000000000029454       0x66 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2_asm.o)
+                0x0000000000029454                memset
  .text.libc.strlen
-                0x00000000000294b2       0x60 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2_asm.o)
-                0x00000000000294b2                strlen
-                0x0000000000029512                __text_end__ = (__text_start__ + SIZEOF (.text))
-                0x0000000000003142                __text_size__ = SIZEOF (.text)
-                0x0000000000029512                __text_load_end__ = __text_end__
+                0x00000000000294ba       0x60 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2_asm.o)
+                0x00000000000294ba                strlen
+                0x000000000002951a                __text_end__ = (__text_start__ + SIZEOF (.text))
+                0x000000000000314a                __text_size__ = SIZEOF (.text)
+                0x000000000002951a                __text_load_end__ = __text_end__
 
 .vfp11_veneer   0x0000000100000000        0x0
  .vfp11_veneer  0x0000000100000000        0x0 linker stubs
@@ -6703,95 +6703,95 @@ Linker script and memory map
 .iplt           0x0000000100000000        0x0
  .iplt          0x0000000100000000        0x0 Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
                 0x0000000000000001                . = ASSERT (((__text_start__ == __text_end__) || ((__text_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .text is too large to fit in FLASH memory segment)
-                0x0000000000029514                __log_const_data_load_start__ = ALIGN (__text_end__, 0x4)
+                0x000000000002951c                __log_const_data_load_start__ = ALIGN (__text_end__, 0x4)
 
 .log_const_data
-                0x0000000000029514       0x58
-                0x0000000000029514                __log_const_data_start__ = .
-                0x0000000000029514                __start_log_const_data = __log_const_data_start__
+                0x000000000002951c       0x58
+                0x000000000002951c                __log_const_data_start__ = .
+                0x000000000002951c                __start_log_const_data = __log_const_data_start__
  *(SORT_BY_NAME(.log_const_data*))
  .log_const_data_GPIOTE
-                0x0000000000029514        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_gpiote.o
-                0x0000000000029514                m_nrf_log_GPIOTE_logs_data_const
+                0x000000000002951c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_gpiote.o
+                0x000000000002951c                m_nrf_log_GPIOTE_logs_data_const
  .log_const_data_I2S
-                0x000000000002951c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_i2s.o
-                0x000000000002951c                m_nrf_log_I2S_logs_data_const
+                0x0000000000029524        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_i2s.o
+                0x0000000000029524                m_nrf_log_I2S_logs_data_const
  .log_const_data_PRS
-                0x0000000000029524        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_prs.o
-                0x0000000000029524                m_nrf_log_PRS_logs_data_const
+                0x000000000002952c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_prs.o
+                0x000000000002952c                m_nrf_log_PRS_logs_data_const
  .log_const_data_TIMER
-                0x000000000002952c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
-                0x000000000002952c                m_nrf_log_TIMER_logs_data_const
+                0x0000000000029534        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
+                0x0000000000029534                m_nrf_log_TIMER_logs_data_const
  .log_const_data_TWIM
-                0x0000000000029534        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_twim.o
-                0x0000000000029534                m_nrf_log_TWIM_logs_data_const
+                0x000000000002953c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_twim.o
+                0x000000000002953c                m_nrf_log_TWIM_logs_data_const
  .log_const_data_UART
-                0x000000000002953c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_uart.o
-                0x000000000002953c                m_nrf_log_UART_logs_data_const
+                0x0000000000029544        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_uart.o
+                0x0000000000029544                m_nrf_log_UART_logs_data_const
  .log_const_data_UARTE
-                0x0000000000029544        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_uarte.o
-                0x0000000000029544                m_nrf_log_UARTE_logs_data_const
+                0x000000000002954c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_uarte.o
+                0x000000000002954c                m_nrf_log_UARTE_logs_data_const
  .log_const_data_app
-                0x000000000002954c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
-                0x000000000002954c                m_nrf_log_app_logs_data_const
+                0x0000000000029554        0x8 Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
+                0x0000000000029554                m_nrf_log_app_logs_data_const
  .log_const_data_app_button
-                0x0000000000029554        0x8 Output/twi_scanner_pca10040 Release/Obj/app_button.o
-                0x0000000000029554                m_nrf_log_app_button_logs_data_const
+                0x000000000002955c        0x8 Output/twi_scanner_pca10040 Release/Obj/app_button.o
+                0x000000000002955c                m_nrf_log_app_button_logs_data_const
  .log_const_data_app_timer
-                0x000000000002955c        0x8 Output/twi_scanner_pca10040 Release/Obj/app_timer2.o
-                0x000000000002955c                m_nrf_log_app_timer_logs_data_const
+                0x0000000000029564        0x8 Output/twi_scanner_pca10040 Release/Obj/app_timer2.o
+                0x0000000000029564                m_nrf_log_app_timer_logs_data_const
  .log_const_data_sortlist
-                0x0000000000029564        0x8 Output/twi_scanner_pca10040 Release/Obj/nrf_sortlist.o
-                0x0000000000029564                m_nrf_log_sortlist_logs_data_const
-                0x000000000002956c                __log_const_data_end__ = (__log_const_data_start__ + SIZEOF (.log_const_data))
+                0x000000000002956c        0x8 Output/twi_scanner_pca10040 Release/Obj/nrf_sortlist.o
+                0x000000000002956c                m_nrf_log_sortlist_logs_data_const
+                0x0000000000029574                __log_const_data_end__ = (__log_const_data_start__ + SIZEOF (.log_const_data))
                 0x0000000000000058                __log_const_data_size__ = SIZEOF (.log_const_data)
-                0x000000000002956c                __stop_log_const_data = __log_const_data_end__
-                0x000000000002956c                __log_const_data_load_end__ = __log_const_data_end__
+                0x0000000000029574                __stop_log_const_data = __log_const_data_end__
+                0x0000000000029574                __log_const_data_load_end__ = __log_const_data_end__
                 0x0000000000000001                . = ASSERT (((__log_const_data_start__ == __log_const_data_end__) || ((__log_const_data_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .log_const_data is too large to fit in FLASH memory segment)
-                0x000000000002956c                __log_backends_load_start__ = ALIGN (__log_const_data_end__, 0x4)
+                0x0000000000029574                __log_backends_load_start__ = ALIGN (__log_const_data_end__, 0x4)
 
-.log_backends   0x000000000002956c       0x10
-                0x000000000002956c                __log_backends_start__ = .
-                0x000000000002956c                __start_log_backends = __log_backends_start__
+.log_backends   0x0000000000029574       0x10
+                0x0000000000029574                __log_backends_start__ = .
+                0x0000000000029574                __start_log_backends = __log_backends_start__
  *(SORT_BY_NAME(.log_backends*))
- .log_backends  0x000000000002956c       0x10 Output/twi_scanner_pca10040 Release/Obj/nrf_log_default_backends.o
-                0x000000000002957c                __log_backends_end__ = (__log_backends_start__ + SIZEOF (.log_backends))
+ .log_backends  0x0000000000029574       0x10 Output/twi_scanner_pca10040 Release/Obj/nrf_log_default_backends.o
+                0x0000000000029584                __log_backends_end__ = (__log_backends_start__ + SIZEOF (.log_backends))
                 0x0000000000000010                __log_backends_size__ = SIZEOF (.log_backends)
-                0x000000000002957c                __stop_log_backends = __log_backends_end__
-                0x000000000002957c                __log_backends_load_end__ = __log_backends_end__
+                0x0000000000029584                __stop_log_backends = __log_backends_end__
+                0x0000000000029584                __log_backends_load_end__ = __log_backends_end__
                 0x0000000000000001                . = ASSERT (((__log_backends_start__ == __log_backends_end__) || ((__log_backends_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .log_backends is too large to fit in FLASH memory segment)
-                0x000000000002957c                __nrf_balloc_load_start__ = ALIGN (__log_backends_end__, 0x4)
+                0x0000000000029584                __nrf_balloc_load_start__ = ALIGN (__log_backends_end__, 0x4)
 
-.nrf_balloc     0x000000000002957c       0x14
-                0x000000000002957c                __nrf_balloc_start__ = .
-                0x000000000002957c                __start_nrf_balloc = __nrf_balloc_start__
+.nrf_balloc     0x0000000000029584       0x14
+                0x0000000000029584                __nrf_balloc_start__ = .
+                0x0000000000029584                __start_nrf_balloc = __nrf_balloc_start__
  *(.nrf_balloc*)
- .nrf_balloc    0x000000000002957c       0x14 Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
-                0x000000000002957c                log_mempool
-                0x0000000000029590                __nrf_balloc_end__ = (__nrf_balloc_start__ + SIZEOF (.nrf_balloc))
+ .nrf_balloc    0x0000000000029584       0x14 Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
+                0x0000000000029584                log_mempool
+                0x0000000000029598                __nrf_balloc_end__ = (__nrf_balloc_start__ + SIZEOF (.nrf_balloc))
                 0x0000000000000014                __nrf_balloc_size__ = SIZEOF (.nrf_balloc)
-                0x0000000000029590                __stop_nrf_balloc = __nrf_balloc_end__
-                0x0000000000029590                __nrf_balloc_load_end__ = __nrf_balloc_end__
+                0x0000000000029598                __stop_nrf_balloc = __nrf_balloc_end__
+                0x0000000000029598                __nrf_balloc_load_end__ = __nrf_balloc_end__
                 0x0000000000000001                . = ASSERT (((__nrf_balloc_start__ == __nrf_balloc_end__) || ((__nrf_balloc_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .nrf_balloc is too large to fit in FLASH memory segment)
-                0x0000000000029590                __nrf_sections_load_start__ = ALIGN (__nrf_balloc_end__, 0x4)
+                0x0000000000029598                __nrf_sections_load_start__ = ALIGN (__nrf_balloc_end__, 0x4)
 
-.nrf_sections   0x0000000000029590        0x0
-                0x0000000000029590                __nrf_sections_start__ = .
-                0x0000000000029590                __start_nrf_sections = __nrf_sections_start__
+.nrf_sections   0x0000000000029598        0x0
+                0x0000000000029598                __nrf_sections_start__ = .
+                0x0000000000029598                __start_nrf_sections = __nrf_sections_start__
  *(.nrf_sections .nrf_sections.*)
-                0x0000000000029590                __nrf_sections_end__ = (__nrf_sections_start__ + SIZEOF (.nrf_sections))
+                0x0000000000029598                __nrf_sections_end__ = (__nrf_sections_start__ + SIZEOF (.nrf_sections))
                 0x0000000000000000                __nrf_sections_size__ = SIZEOF (.nrf_sections)
-                0x0000000000029590                __nrf_sections_load_end__ = __nrf_sections_end__
+                0x0000000000029598                __nrf_sections_load_end__ = __nrf_sections_end__
                 0x0000000000000001                . = ASSERT (((__nrf_sections_start__ == __nrf_sections_end__) || ((__nrf_sections_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .nrf_sections is too large to fit in FLASH memory segment)
-                0x0000000000029590                __log_dynamic_data_load_start__ = ALIGN (__nrf_sections_end__, 0x4)
+                0x0000000000029598                __log_dynamic_data_load_start__ = ALIGN (__nrf_sections_end__, 0x4)
 
 .log_dynamic_data
-                0x0000000020007980        0x0 load address 0x0000000000029590
+                0x0000000020007980        0x0 load address 0x0000000000029598
                 0x0000000020007980                __log_dynamic_data_start__ = .
  *(SORT_BY_NAME(.log_dynamic_data*))
                 0x0000000020007980                __log_dynamic_data_end__ = (__log_dynamic_data_start__ + SIZEOF (.log_dynamic_data))
                 0x0000000000000000                __log_dynamic_data_size__ = SIZEOF (.log_dynamic_data)
-                0x0000000000029590                __log_dynamic_data_load_end__ = (__log_dynamic_data_load_start__ + SIZEOF (.log_dynamic_data))
+                0x0000000000029598                __log_dynamic_data_load_end__ = (__log_dynamic_data_load_start__ + SIZEOF (.log_dynamic_data))
                 0x0000000000000001                . = ASSERT (((__log_dynamic_data_load_start__ == __log_dynamic_data_load_end__) || ((__log_dynamic_data_load_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .log_dynamic_data is too large to fit in FLASH memory segment)
 
 .log_dynamic_data_run
@@ -6804,15 +6804,15 @@ Linker script and memory map
                 0x0000000020007980                __stop_log_dynamic_data = __log_dynamic_data_run_end__
                 0x0000000020007980                __log_dynamic_data_run_load_end__ = __log_dynamic_data_run_end__
                 0x0000000000000001                . = ASSERT (((__log_dynamic_data_run_start__ == __log_dynamic_data_run_end__) || ((__log_dynamic_data_run_end__ - __RAM_segment_start__) <= __RAM_segment_size__)), error: .log_dynamic_data_run is too large to fit in RAM memory segment)
-                0x0000000000029590                __log_filter_data_load_start__ = ALIGN ((__log_dynamic_data_load_start__ + SIZEOF (.log_dynamic_data)), 0x4)
+                0x0000000000029598                __log_filter_data_load_start__ = ALIGN ((__log_dynamic_data_load_start__ + SIZEOF (.log_dynamic_data)), 0x4)
 
 .log_filter_data
-                0x0000000020007980        0x0 load address 0x0000000000029590
+                0x0000000020007980        0x0 load address 0x0000000000029598
                 0x0000000020007980                __log_filter_data_start__ = .
  *(SORT_BY_NAME(.log_filter_data*))
                 0x0000000020007980                __log_filter_data_end__ = (__log_filter_data_start__ + SIZEOF (.log_filter_data))
                 0x0000000000000000                __log_filter_data_size__ = SIZEOF (.log_filter_data)
-                0x0000000000029590                __log_filter_data_load_end__ = (__log_filter_data_load_start__ + SIZEOF (.log_filter_data))
+                0x0000000000029598                __log_filter_data_load_end__ = (__log_filter_data_load_start__ + SIZEOF (.log_filter_data))
                 0x0000000000000001                . = ASSERT (((__log_filter_data_load_start__ == __log_filter_data_load_end__) || ((__log_filter_data_load_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .log_filter_data is too large to fit in FLASH memory segment)
 
 .log_filter_data_run
@@ -6836,197 +6836,197 @@ Linker script and memory map
                 0x0000000000000000                __nrf_sections_run_end_size__ = SIZEOF (.nrf_sections_run_end)
                 0x0000000020007980                __nrf_sections_run_end_load_end__ = __nrf_sections_run_end_end__
                 0x0000000000000001                . = ASSERT (((__nrf_sections_run_end_start__ == __nrf_sections_run_end_end__) || ((__nrf_sections_run_end_end__ - __RAM_segment_start__) <= __RAM_segment_size__)), error: .nrf_sections_run_end is too large to fit in RAM memory segment)
-                0x0000000000029590                __dtors_load_start__ = ALIGN ((__log_filter_data_load_start__ + SIZEOF (.log_filter_data)), 0x4)
+                0x0000000000029598                __dtors_load_start__ = ALIGN ((__log_filter_data_load_start__ + SIZEOF (.log_filter_data)), 0x4)
 
-.dtors          0x0000000000029590        0x0
-                0x0000000000029590                __dtors_start__ = .
+.dtors          0x0000000000029598        0x0
+                0x0000000000029598                __dtors_start__ = .
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
  *(.fini_array)
  *(SORT_BY_NAME(.fini_array.*))
-                0x0000000000029590                __dtors_end__ = (__dtors_start__ + SIZEOF (.dtors))
+                0x0000000000029598                __dtors_end__ = (__dtors_start__ + SIZEOF (.dtors))
                 0x0000000000000000                __dtors_size__ = SIZEOF (.dtors)
-                0x0000000000029590                __dtors_load_end__ = __dtors_end__
+                0x0000000000029598                __dtors_load_end__ = __dtors_end__
                 0x0000000000000001                . = ASSERT (((__dtors_start__ == __dtors_end__) || ((__dtors_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .dtors is too large to fit in FLASH memory segment)
-                0x0000000000029590                __ctors_load_start__ = ALIGN (__dtors_end__, 0x4)
+                0x0000000000029598                __ctors_load_start__ = ALIGN (__dtors_end__, 0x4)
 
-.ctors          0x0000000000029590        0x0
-                0x0000000000029590                __ctors_start__ = .
+.ctors          0x0000000000029598        0x0
+                0x0000000000029598                __ctors_start__ = .
  *(SORT_BY_NAME(.ctors.*))
  *(.ctors)
  *(.init_array)
  *(SORT_BY_NAME(.init_array.*))
-                0x0000000000029590                __ctors_end__ = (__ctors_start__ + SIZEOF (.ctors))
+                0x0000000000029598                __ctors_end__ = (__ctors_start__ + SIZEOF (.ctors))
                 0x0000000000000000                __ctors_size__ = SIZEOF (.ctors)
-                0x0000000000029590                __ctors_load_end__ = __ctors_end__
+                0x0000000000029598                __ctors_load_end__ = __ctors_end__
                 0x0000000000000001                . = ASSERT (((__ctors_start__ == __ctors_end__) || ((__ctors_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .ctors is too large to fit in FLASH memory segment)
-                0x0000000000029590                __rodata_load_start__ = ALIGN (__ctors_end__, 0x4)
+                0x0000000000029598                __rodata_load_start__ = ALIGN (__ctors_end__, 0x4)
 
-.rodata         0x0000000000029590      0xac0
-                0x0000000000029590                __rodata_start__ = .
+.rodata         0x0000000000029598      0xac8
+                0x0000000000029598                __rodata_start__ = .
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x0000000000029590       0x20 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
+ .rodata        0x0000000000029598       0x20 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
  .rodata.nrf_log_backend_uart_api
-                0x00000000000295b0        0xc Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
-                0x00000000000295b0                nrf_log_backend_uart_api
+                0x00000000000295b8        0xc Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
+                0x00000000000295b8                nrf_log_backend_uart_api
  .rodata.uart_init.str1.1
-                0x00000000000295bc       0x8a Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
+                0x00000000000295c4       0x8a Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
  .rodata.str1.1
-                0x0000000000029646       0x11 Output/twi_scanner_pca10040 Release/Obj/nrf_log_default_backends.o
- *fill*         0x0000000000029657        0x1 
+                0x000000000002964e       0x11 Output/twi_scanner_pca10040 Release/Obj/nrf_log_default_backends.o
+ *fill*         0x000000000002965f        0x1 
  .rodata.m_log_push_ringbuf
-                0x0000000000029658        0xc Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
+                0x0000000000029660        0xc Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
  .rodata.nrf_log_frontend_dequeue.str1.1
-                0x0000000000029664       0x11 Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
+                0x000000000002966c       0x11 Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
  .rodata.str1.1
-                0x0000000000029675        0x4 Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
- *fill*         0x0000000000029679        0x3 
+                0x000000000002967d        0x4 Output/twi_scanner_pca10040 Release/Obj/nrf_log_frontend.o
+ *fill*         0x0000000000029681        0x3 
  .rodata.m_colors
-                0x000000000002967c       0x24 Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
+                0x0000000000029684       0x24 Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
  .rodata.nrf_log_hexdump_entry_process.str1.1
-                0x00000000000296a0        0xf Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
+                0x00000000000296a8        0xf Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
                                          0x11 (size before relaxing)
  .rodata.postfix_process.str1.1
-                0x00000000000296af        0x5 Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
+                0x00000000000296b7        0x5 Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
                                           0xb (size before relaxing)
  .rodata.prefix_process.str1.1
-                0x00000000000296b4       0x2a Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
- *fill*         0x00000000000296de        0x2 
+                0x00000000000296bc       0x2a Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
+ *fill*         0x00000000000296e6        0x2 
  .rodata.severity_names
-                0x00000000000296e0       0x14 Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
+                0x00000000000296e8       0x14 Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
  .rodata.str1.1
-                0x00000000000296f4       0x51 Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
+                0x00000000000296fc       0x51 Output/twi_scanner_pca10040 Release/Obj/nrf_log_str_formatter.o
  .rodata.app_error_fault_handler.str1.1
-                0x0000000000029745       0x6c Output/twi_scanner_pca10040 Release/Obj/app_error_weak.o
+                0x000000000002974d       0x6c Output/twi_scanner_pca10040 Release/Obj/app_error_weak.o
  .rodata._aV2C.7501
-                0x00000000000297b1       0x10 Output/twi_scanner_pca10040 Release/Obj/nrf_fprintf_format.o
+                0x00000000000297b9       0x10 Output/twi_scanner_pca10040 Release/Obj/nrf_fprintf_format.o
  .rodata.m_unknown_str
-                0x00000000000297c1       0x13 Output/twi_scanner_pca10040 Release/Obj/nrf_strerror.o
+                0x00000000000297c9       0x13 Output/twi_scanner_pca10040 Release/Obj/nrf_strerror.o
  .rodata.nrf_strerror_array
-                0x00000000000297d4      0x118 Output/twi_scanner_pca10040 Release/Obj/nrf_strerror.o
+                0x00000000000297dc      0x118 Output/twi_scanner_pca10040 Release/Obj/nrf_strerror.o
  .rodata.str1.1
-                0x00000000000298ec      0x391 Output/twi_scanner_pca10040 Release/Obj/nrf_strerror.o
+                0x00000000000298f4      0x391 Output/twi_scanner_pca10040 Release/Obj/nrf_strerror.o
  .rodata.str1.1
-                0x0000000000029c7d        0xa Output/twi_scanner_pca10040 Release/Obj/app_timer2.o
+                0x0000000000029c85        0xa Output/twi_scanner_pca10040 Release/Obj/app_timer2.o
  .rodata.str1.1
-                0x0000000000029c87        0xb Output/twi_scanner_pca10040 Release/Obj/app_button.o
+                0x0000000000029c8f        0xb Output/twi_scanner_pca10040 Release/Obj/app_button.o
  .rodata.str1.1
-                0x0000000000029c92        0x9 Output/twi_scanner_pca10040 Release/Obj/nrf_sortlist.o
- *fill*         0x0000000000029c9b        0x5 
+                0x0000000000029c9a        0x9 Output/twi_scanner_pca10040 Release/Obj/nrf_sortlist.o
+ *fill*         0x0000000000029ca3        0xd 
  .rodata.delay_machine_code.7573
-                0x0000000000029ca0        0x6 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_twi.o
+                0x0000000000029cb0        0x6 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_twi.o
  .rodata.str1.1
-                0x0000000000029ca6        0x4 Output/twi_scanner_pca10040 Release/Obj/nrfx_prs.o
- *fill*         0x0000000000029caa        0x2 
+                0x0000000000029cb6        0x4 Output/twi_scanner_pca10040 Release/Obj/nrfx_prs.o
+ *fill*         0x0000000000029cba        0x2 
  .rodata.irq_handlers.8529
-                0x0000000000029cac        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_twim.o
+                0x0000000000029cbc        0x8 Output/twi_scanner_pca10040 Release/Obj/nrfx_twim.o
  .rodata.str1.1
-                0x0000000000029cb4        0x5 Output/twi_scanner_pca10040 Release/Obj/nrfx_twim.o
+                0x0000000000029cc4        0x5 Output/twi_scanner_pca10040 Release/Obj/nrfx_twim.o
  .rodata.str1.1
-                0x0000000000029cb9        0x5 Output/twi_scanner_pca10040 Release/Obj/nrfx_uart.o
+                0x0000000000029cc9        0x5 Output/twi_scanner_pca10040 Release/Obj/nrfx_uart.o
  .rodata.str1.1
-                0x0000000000029cbe        0x6 Output/twi_scanner_pca10040 Release/Obj/nrfx_uarte.o
+                0x0000000000029cce        0x6 Output/twi_scanner_pca10040 Release/Obj/nrfx_uarte.o
  .rodata.str1.1
-                0x0000000000029cc4        0x4 Output/twi_scanner_pca10040 Release/Obj/nrfx_i2s.o
+                0x0000000000029cd4        0x4 Output/twi_scanner_pca10040 Release/Obj/nrfx_i2s.o
  .rodata.str1.1
-                0x0000000000029cc8        0x7 Output/twi_scanner_pca10040 Release/Obj/nrfx_gpiote.o
+                0x0000000000029cd8        0x7 Output/twi_scanner_pca10040 Release/Obj/nrfx_gpiote.o
  .rodata.str1.1
-                0x0000000000029ccf        0x6 Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
+                0x0000000000029cdf        0x6 Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
  .rodata.btn1_event_handler.str1.1
-                0x0000000000029cd5        0x6 Output/twi_scanner_pca10040 Release/Obj/main.o
+                0x0000000000029ce5        0x6 Output/twi_scanner_pca10040 Release/Obj/main.o
  .rodata.btn2_event_handler.str1.1
-                0x0000000000029cdb        0x6 Output/twi_scanner_pca10040 Release/Obj/main.o
+                0x0000000000029ceb        0x6 Output/twi_scanner_pca10040 Release/Obj/main.o
  .rodata.button_init.str1.1
-                0x0000000000029ce1       0x84 Output/twi_scanner_pca10040 Release/Obj/main.o
+                0x0000000000029cf1       0x84 Output/twi_scanner_pca10040 Release/Obj/main.o
  .rodata.main.str1.1
-                0x0000000000029d65       0x98 Output/twi_scanner_pca10040 Release/Obj/main.o
- *fill*         0x0000000000029dfd        0x3 
+                0x0000000000029d75       0x98 Output/twi_scanner_pca10040 Release/Obj/main.o
+ *fill*         0x0000000000029e0d        0x3 
  .rodata.m_twi_instance
-                0x0000000000029e00       0x10 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+                0x0000000000029e10       0x10 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
  .rodata.libc.__RAL_ascii_ctype_map
-                0x0000000000029e10       0x80 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029e10                __RAL_ascii_ctype_map
+                0x0000000000029e20       0x80 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029e20                __RAL_ascii_ctype_map
  .rodata.libc.__RAL_ascii_ctype_mask
-                0x0000000000029e90        0xd C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
- *fill*         0x0000000000029e9d        0x3 
+                0x0000000000029ea0        0xd C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+ *fill*         0x0000000000029ead        0x3 
  .rodata.libc.__RAL_c_locale
-                0x0000000000029ea0        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029ea0                __RAL_c_locale
+                0x0000000000029eb0        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029eb0                __RAL_c_locale
  .rodata.libc.__RAL_c_locale_abbrev_day_names
-                0x0000000000029eac       0x1d C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029eac                __RAL_c_locale_abbrev_day_names
- *fill*         0x0000000000029ec9        0x3 
+                0x0000000000029ebc       0x1d C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029ebc                __RAL_c_locale_abbrev_day_names
+ *fill*         0x0000000000029ed9        0x3 
  .rodata.libc.__RAL_c_locale_abbrev_month_names
-                0x0000000000029ecc       0x31 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029ecc                __RAL_c_locale_abbrev_month_names
- *fill*         0x0000000000029efd        0x3 
+                0x0000000000029edc       0x31 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029edc                __RAL_c_locale_abbrev_month_names
+ *fill*         0x0000000000029f0d        0x3 
  .rodata.libc.__RAL_c_locale_am_pm_indicator
-                0x0000000000029f00        0x7 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029f00                __RAL_c_locale_am_pm_indicator
- *fill*         0x0000000000029f07        0x1 
+                0x0000000000029f10        0x7 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029f10                __RAL_c_locale_am_pm_indicator
+ *fill*         0x0000000000029f17        0x1 
  .rodata.libc.__RAL_c_locale_data
-                0x0000000000029f08       0x58 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029f08                __RAL_c_locale_data
+                0x0000000000029f18       0x58 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029f18                __RAL_c_locale_data
  .rodata.libc.__RAL_c_locale_date_format
-                0x0000000000029f60        0x9 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029f60                __RAL_c_locale_date_format
- *fill*         0x0000000000029f69        0x3 
+                0x0000000000029f70        0x9 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029f70                __RAL_c_locale_date_format
+ *fill*         0x0000000000029f79        0x3 
  .rodata.libc.__RAL_c_locale_date_time_format
-                0x0000000000029f6c        0xf C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029f6c                __RAL_c_locale_date_time_format
- *fill*         0x0000000000029f7b        0x1 
+                0x0000000000029f7c        0xf C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029f7c                __RAL_c_locale_date_time_format
+ *fill*         0x0000000000029f8b        0x1 
  .rodata.libc.__RAL_c_locale_day_names
-                0x0000000000029f7c       0x3a C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029f7c                __RAL_c_locale_day_names
- *fill*         0x0000000000029fb6        0x2 
+                0x0000000000029f8c       0x3a C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029f8c                __RAL_c_locale_day_names
+ *fill*         0x0000000000029fc6        0x2 
  .rodata.libc.__RAL_c_locale_month_names
-                0x0000000000029fb8       0x57 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x0000000000029fb8                __RAL_c_locale_month_names
- *fill*         0x000000000002a00f        0x1 
+                0x0000000000029fc8       0x57 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x0000000000029fc8                __RAL_c_locale_month_names
+ *fill*         0x000000000002a01f        0x1 
  .rodata.libc.__RAL_c_locale_time_format
-                0x000000000002a010        0x9 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x000000000002a010                __RAL_c_locale_time_format
- *fill*         0x000000000002a019        0x3 
+                0x000000000002a020        0x9 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x000000000002a020                __RAL_c_locale_time_format
+ *fill*         0x000000000002a029        0x3 
  .rodata.libc.__RAL_codeset_ascii
-                0x000000000002a01c       0x20 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x000000000002a01c                __RAL_codeset_ascii
+                0x000000000002a02c       0x20 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x000000000002a02c                __RAL_codeset_ascii
  .rodata.libc.__RAL_data_empty_string
-                0x000000000002a03c        0x1 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x000000000002a03c                __RAL_data_empty_string
- *fill*         0x000000000002a03d        0x3 
+                0x000000000002a04c        0x1 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x000000000002a04c                __RAL_data_empty_string
+ *fill*         0x000000000002a04d        0x3 
  .rodata.libc.__RAL_data_utf8_period
-                0x000000000002a040        0x2 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
-                0x000000000002a040                __RAL_data_utf8_period
- *fill*         0x000000000002a042        0x2 
+                0x000000000002a050        0x2 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x000000000002a050                __RAL_data_utf8_period
+ *fill*         0x000000000002a052        0x2 
  .rodata.libc.__RAL_find_locale.str1.4
-                0x000000000002a044        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+                0x000000000002a054        0xc C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
                                           0xa (size before relaxing)
-                0x000000000002a050                __rodata_end__ = (__rodata_start__ + SIZEOF (.rodata))
-                0x0000000000000ac0                __rodata_size__ = SIZEOF (.rodata)
-                0x000000000002a050                __rodata_load_end__ = __rodata_end__
+                0x000000000002a060                __rodata_end__ = (__rodata_start__ + SIZEOF (.rodata))
+                0x0000000000000ac8                __rodata_size__ = SIZEOF (.rodata)
+                0x000000000002a060                __rodata_load_end__ = __rodata_end__
 
-.rel.dyn        0x000000000002a050        0x0
- .rel.iplt      0x000000000002a050        0x0 Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
+.rel.dyn        0x000000000002a060        0x0
+ .rel.iplt      0x000000000002a060        0x0 Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
                 0x0000000000000001                . = ASSERT (((__rodata_start__ == __rodata_end__) || ((__rodata_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .rodata is too large to fit in FLASH memory segment)
-                0x000000000002a050                __ARM.exidx_load_start__ = ALIGN (__rodata_end__, 0x4)
+                0x000000000002a060                __ARM.exidx_load_start__ = ALIGN (__rodata_end__, 0x4)
 
-.ARM.exidx      0x000000000002a050        0x0
-                0x000000000002a050                __ARM.exidx_start__ = .
-                0x000000000002a050                __exidx_start = __ARM.exidx_start__
+.ARM.exidx      0x000000000002a060        0x0
+                0x000000000002a060                __ARM.exidx_start__ = .
+                0x000000000002a060                __exidx_start = __ARM.exidx_start__
  *(.ARM.exidx .ARM.exidx.*)
-                0x000000000002a050                __ARM.exidx_end__ = (__ARM.exidx_start__ + SIZEOF (.ARM.exidx))
+                0x000000000002a060                __ARM.exidx_end__ = (__ARM.exidx_start__ + SIZEOF (.ARM.exidx))
                 0x0000000000000000                __ARM.exidx_size__ = SIZEOF (.ARM.exidx)
-                0x000000000002a050                __exidx_end = __ARM.exidx_end__
-                0x000000000002a050                __ARM.exidx_load_end__ = __ARM.exidx_end__
+                0x000000000002a060                __exidx_end = __ARM.exidx_end__
+                0x000000000002a060                __ARM.exidx_load_end__ = __ARM.exidx_end__
                 0x0000000000000001                . = ASSERT (((__ARM.exidx_start__ == __ARM.exidx_end__) || ((__ARM.exidx_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .ARM.exidx is too large to fit in FLASH memory segment)
-                0x000000000002a050                __fast_load_start__ = ALIGN (__ARM.exidx_end__, 0x4)
+                0x000000000002a060                __fast_load_start__ = ALIGN (__ARM.exidx_end__, 0x4)
 
-.fast           0x0000000020007980        0x0 load address 0x000000000002a050
+.fast           0x0000000020007980        0x0 load address 0x000000000002a060
                 0x0000000020007980                __fast_start__ = .
  *(.fast .fast.*)
                 0x0000000020007980                __fast_end__ = (__fast_start__ + SIZEOF (.fast))
                 0x0000000000000000                __fast_size__ = SIZEOF (.fast)
-                0x000000000002a050                __fast_load_end__ = (__fast_load_start__ + SIZEOF (.fast))
+                0x000000000002a060                __fast_load_end__ = (__fast_load_start__ + SIZEOF (.fast))
                 0x0000000000000001                . = ASSERT (((__fast_load_start__ == __fast_load_end__) || ((__fast_load_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .fast is too large to fit in FLASH memory segment)
 
 .fast_run       0x0000000020007980        0x0
@@ -7036,9 +7036,9 @@ Linker script and memory map
                 0x0000000000000000                __fast_run_size__ = SIZEOF (.fast_run)
                 0x0000000020007980                __fast_run_load_end__ = __fast_run_end__
                 0x0000000000000001                . = ASSERT (((__fast_run_start__ == __fast_run_end__) || ((__fast_run_end__ - __RAM_segment_start__) <= __RAM_segment_size__)), error: .fast_run is too large to fit in RAM memory segment)
-                0x000000000002a050                __data_load_start__ = ALIGN ((__fast_load_start__ + SIZEOF (.fast)), 0x4)
+                0x000000000002a060                __data_load_start__ = ALIGN ((__fast_load_start__ + SIZEOF (.fast)), 0x4)
 
-.data           0x0000000020007980       0x38 load address 0x000000000002a050
+.data           0x0000000020007980       0x38 load address 0x000000000002a060
                 0x0000000020007980                __data_start__ = .
  *(.data .data.* .gnu.linkonce.d.*)
  .data.m_uart   0x0000000020007980       0x14 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
@@ -7057,13 +7057,13 @@ Linker script and memory map
                 0x00000000200079a4                __RAL_global_locale
                 0x00000000200079b8                __data_end__ = (__data_start__ + SIZEOF (.data))
                 0x0000000000000038                __data_size__ = SIZEOF (.data)
-                0x000000000002a088                __data_load_end__ = (__data_load_start__ + SIZEOF (.data))
+                0x000000000002a098                __data_load_end__ = (__data_load_start__ + SIZEOF (.data))
 
 .igot.plt       0x0000000100000000        0x0
  .igot.plt      0x0000000100000000        0x0 Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
                 0x0000000000000001                . = ASSERT (((__data_load_start__ == __data_load_end__) || ((__data_load_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .data is too large to fit in FLASH memory segment)
 
-.data_run       0x0000000020007980       0x38 load address 0x000000000002a050
+.data_run       0x0000000020007980       0x38 load address 0x000000000002a060
                 0x0000000020007980                __data_run_start__ = .
                 0x00000000200079b8                . = MAX ((__data_run_start__ + SIZEOF (.data)), .)
  *fill*         0x0000000020007980       0x38 
@@ -7071,16 +7071,16 @@ Linker script and memory map
                 0x0000000000000038                __data_run_size__ = SIZEOF (.data_run)
                 0x00000000200079b8                __data_run_load_end__ = __data_run_end__
                 0x0000000000000001                . = ASSERT (((__data_run_start__ == __data_run_end__) || ((__data_run_end__ - __RAM_segment_start__) <= __RAM_segment_size__)), error: .data_run is too large to fit in RAM memory segment)
-                0x000000000002a088                __tdata_load_start__ = ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4)
+                0x000000000002a098                __tdata_load_start__ = ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4)
 
-.tdata          0x00000000200079b8        0x0 load address 0x000000000002a088
+.tdata          0x00000000200079b8        0x0 load address 0x000000000002a098
                 0x00000000200079b8                __tdata_start__ = .
  *(.tdata .tdata.*)
                 0x00000000200079b8                __tdata_end__ = (__tdata_start__ + SIZEOF (.tdata))
                 0x0000000000000000                __tdata_size__ = SIZEOF (.tdata)
-                0x000000000002a088                __tdata_load_end__ = (__tdata_load_start__ + SIZEOF (.tdata))
-                0x000000000002a088                __FLASH_segment_used_end__ = (ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4) + SIZEOF (.tdata))
-                0x000000000002a088                __FLASH_segment_used_size__ = (__FLASH_segment_used_end__ - __FLASH_segment_start__)
+                0x000000000002a098                __tdata_load_end__ = (__tdata_load_start__ + SIZEOF (.tdata))
+                0x000000000002a098                __FLASH_segment_used_end__ = (ALIGN ((__data_load_start__ + SIZEOF (.data)), 0x4) + SIZEOF (.tdata))
+                0x000000000002a098                __FLASH_segment_used_size__ = (__FLASH_segment_used_end__ - __FLASH_segment_start__)
                 0x0000000000000001                . = ASSERT (((__tdata_load_start__ == __tdata_load_end__) || ((__tdata_load_end__ - __FLASH_segment_start__) <= __FLASH_segment_size__)), error: .tdata is too large to fit in FLASH memory segment)
 
 .tdata_run      0x00000000200079b8        0x0
@@ -7383,7 +7383,7 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .comment       0x0000000000000043       0x44 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
  .comment       0x0000000000000043       0x44 C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.30a/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
 
-.debug_line     0x0000000000000000    0x15ae9
+.debug_line     0x0000000000000000    0x15ad6
  .debug_line    0x0000000000000000      0x1ee Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
  .debug_line    0x00000000000001ee      0x6ef Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
  .debug_line    0x00000000000008dd      0x96b Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
@@ -7414,13 +7414,13 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .debug_line    0x000000000000fdf2     0x1ab3 Output/twi_scanner_pca10040 Release/Obj/nrfx_gpiote.o
  .debug_line    0x00000000000118a5      0xeea Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
  .debug_line    0x000000000001278f     0x10c2 Output/twi_scanner_pca10040 Release/Obj/drv_rtc.o
- .debug_line    0x0000000000013851      0xe93 Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_line    0x00000000000146e4       0xb8 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf52.o
- .debug_line    0x000000000001479c       0xda Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf_common.o
- .debug_line    0x0000000000014876      0x637 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
- .debug_line    0x0000000000014ead      0xc3c Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+ .debug_line    0x0000000000013851      0xe80 Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_line    0x00000000000146d1       0xb8 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf52.o
+ .debug_line    0x0000000000014789       0xda Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf_common.o
+ .debug_line    0x0000000000014863      0x637 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+ .debug_line    0x0000000000014e9a      0xc3c Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
 
-.debug_info     0x0000000000000000    0x2f6e7
+.debug_info     0x0000000000000000    0x2f6fa
  .debug_info    0x0000000000000000       0x22 Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
  .debug_info    0x0000000000000022      0xea0 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
  .debug_info    0x0000000000000ec2     0x1885 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
@@ -7451,11 +7451,11 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .debug_info    0x0000000000022f80     0x394d Output/twi_scanner_pca10040 Release/Obj/nrfx_gpiote.o
  .debug_info    0x00000000000268cd     0x21e0 Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
  .debug_info    0x0000000000028aad     0x2689 Output/twi_scanner_pca10040 Release/Obj/drv_rtc.o
- .debug_info    0x000000000002b136     0x15d3 Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_info    0x000000000002c709       0x26 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf52.o
- .debug_info    0x000000000002c72f       0x26 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf_common.o
- .debug_info    0x000000000002c755     0x1202 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
- .debug_info    0x000000000002d957     0x1d90 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+ .debug_info    0x000000000002b136     0x15e6 Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_info    0x000000000002c71c       0x26 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf52.o
+ .debug_info    0x000000000002c742       0x26 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf_common.o
+ .debug_info    0x000000000002c768     0x1202 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+ .debug_info    0x000000000002d96a     0x1d90 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
 
 .debug_abbrev   0x0000000000000000     0x6b4f
  .debug_abbrev  0x0000000000000000       0x12 Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
@@ -7566,7 +7566,7 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000000ba0       0x48 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
 
-.debug_str      0x0000000000000000    0x7f8e5
+.debug_str      0x0000000000000000    0x7f8ff
  .debug_str     0x0000000000000000       0xef Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
  .debug_str     0x00000000000000ef    0x6ad61 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
                                       0x6be70 (size before relaxing)
@@ -7626,18 +7626,18 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
                                       0x7054f (size before relaxing)
  .debug_str     0x000000000007d012      0x698 Output/twi_scanner_pca10040 Release/Obj/drv_rtc.o
                                       0x6fd7b (size before relaxing)
- .debug_str     0x000000000007d6aa     0x19c2 Output/twi_scanner_pca10040 Release/Obj/main.o
-                                      0x747b6 (size before relaxing)
- .debug_str     0x000000000007f06c       0x7b Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf52.o
+ .debug_str     0x000000000007d6aa     0x19dc Output/twi_scanner_pca10040 Release/Obj/main.o
+                                      0x747d0 (size before relaxing)
+ .debug_str     0x000000000007f086       0x7b Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf52.o
                                         0x119 (size before relaxing)
- .debug_str     0x000000000007f0e7       0x80 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf_common.o
+ .debug_str     0x000000000007f101       0x80 Output/twi_scanner_pca10040 Release/Obj/ses_startup_nrf_common.o
                                         0x11e (size before relaxing)
- .debug_str     0x000000000007f167      0x493 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+ .debug_str     0x000000000007f181      0x493 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
                                       0x5bc27 (size before relaxing)
- .debug_str     0x000000000007f5fa      0x2eb Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+ .debug_str     0x000000000007f614      0x2eb Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
                                       0x71c1b (size before relaxing)
 
-.debug_ranges   0x0000000000000000     0x2a28
+.debug_ranges   0x0000000000000000     0x2a10
  .debug_ranges  0x0000000000000000       0x78 Output/twi_scanner_pca10040 Release/Obj/thumb_crt0.o
  .debug_ranges  0x0000000000000078       0x28 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
  .debug_ranges  0x00000000000000a0       0x80 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_uart.o
@@ -7668,9 +7668,9 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .debug_ranges  0x0000000000001b78      0x7e0 Output/twi_scanner_pca10040 Release/Obj/nrfx_gpiote.o
  .debug_ranges  0x0000000000002358      0x238 Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
  .debug_ranges  0x0000000000002590      0x308 Output/twi_scanner_pca10040 Release/Obj/drv_rtc.o
- .debug_ranges  0x0000000000002898       0x90 Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_ranges  0x0000000000002928       0x28 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
- .debug_ranges  0x0000000000002950       0xd8 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+ .debug_ranges  0x0000000000002898       0x78 Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_ranges  0x0000000000002910       0x28 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+ .debug_ranges  0x0000000000002938       0xd8 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
 
 .debug_frame    0x0000000000000000     0x1fd0
  .debug_frame   0x0000000000000000       0x48 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
@@ -7873,7 +7873,7 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .debug_pubtypes
                 0x00000000000061a9      0x457 Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
 
-.debug_macro    0x0000000000000000     0x61b4
+.debug_macro    0x0000000000000000     0x61bb
  .debug_macro   0x0000000000000000      0x221 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
  .debug_macro   0x0000000000000221       0x22 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
  .debug_macro   0x0000000000000243       0x72 Output/twi_scanner_pca10040 Release/Obj/nrf_log_backend_serial.o
@@ -7963,10 +7963,10 @@ OUTPUT(Output/Release/Exe/twi_scanner_pca10040.elf elf32-littlearm)
  .debug_macro   0x000000000000560b       0x22 Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
  .debug_macro   0x000000000000562d       0x10 Output/twi_scanner_pca10040 Release/Obj/nrfx_timer.o
  .debug_macro   0x000000000000563d      0x2c9 Output/twi_scanner_pca10040 Release/Obj/drv_rtc.o
- .debug_macro   0x0000000000005906      0x429 Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_macro   0x0000000000005d2f       0x10 Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_macro   0x0000000000005d3f       0x3a Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_macro   0x0000000000005d79       0x1c Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_macro   0x0000000000005d95       0x22 Output/twi_scanner_pca10040 Release/Obj/main.o
- .debug_macro   0x0000000000005db7       0xb3 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
- .debug_macro   0x0000000000005e6a      0x34a Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
+ .debug_macro   0x0000000000005906      0x430 Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_macro   0x0000000000005d36       0x10 Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_macro   0x0000000000005d46       0x3a Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_macro   0x0000000000005d80       0x1c Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_macro   0x0000000000005d9c       0x22 Output/twi_scanner_pca10040 Release/Obj/main.o
+ .debug_macro   0x0000000000005dbe       0xb3 Output/twi_scanner_pca10040 Release/Obj/system_nrf52.o
+ .debug_macro   0x0000000000005e71      0x34a Output/twi_scanner_pca10040 Release/Obj/nrf_drv_mpu_twi.o
