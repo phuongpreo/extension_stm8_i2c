@@ -148,8 +148,10 @@ APP_TIMER_DEF(m_repeat_id);  /**< Handler for single shot timer used to light LE
 #define GET_SERVO_ANGLE_REG 0x23
 
 #define SET_CONFIG_REG 0x9E
-#define SET_SERVO_CONFIG_REG 0xA1
+#define SET_SR04_CONFIG_REG 0xA1
 #define SET_SERVO_ANGLE_REG 0xA3
+#define SET_SR04_IRQ_DIST_REG 0xA2
+
 
 #define KODIMO 0x40
 #define LED_SERVO_EXTENSION 0x01
@@ -300,7 +302,6 @@ int main(void)
 
 
     NRF_LOG_INFO("Heloooooo");NRF_LOG_FLUSH();
-    scan_address();
 
 
 
@@ -308,7 +309,11 @@ int main(void)
     nrf_drv_mpu_read_registers(GET_TYPE_DEVICE_REG,typeDevice,1);
     NRF_LOG_INFO("TYPE_DEVICE_REG=0x%x",typeDevice[0]);
     NRF_LOG_INFO("%s from %s",(typeDevice[0]&0x3F)==LED_SERVO_EXTENSION?"LED_SERVO_EXTENSION":"Unknow",(typeDevice[0]&0xC0)==KODIMO?"KODIMO":"Unknow");
-    nrf_drv_mpu_write_single_register(SET_SERVO_CONFIG_REG,0x01);
+    nrf_drv_mpu_write_single_register(SET_SR04_CONFIG_REG,0x01); //enable sr04
+    nrf_drv_mpu_write_single_register(SET_SR04_IRQ_DIST_REG,0x81); //enable 32cm 
+
+//    err_code = scan_address();
+//    APP_ERROR_CHECK(err_code);
 
 //    err_code = app_timer_create(&m_repeat_id,APP_TIMER_MODE_REPEATED,repeat_timer_handler);
 //    APP_ERROR_CHECK(err_code);

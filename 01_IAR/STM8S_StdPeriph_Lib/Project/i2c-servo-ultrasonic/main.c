@@ -49,7 +49,7 @@
 #define GET_SERVO_ANGLE_REG 0x23
 
 #define SET_CONFIG_REG 0x9E
-#define SET_SERVO_CONFIG_REG 0xA1
+#define SET_SR04_CONFIG_REG 0xA1
 #define SET_SERVO_ANGLE_REG 0xA3
 #define SET_SR04_IRQ_DIST_REG 0xA2
 /* Private macro -------------------------------------------------------------*/
@@ -82,7 +82,7 @@ volatile uint8_t _sr04_config_reg = 0x00;
 const uint8_t _type_device_reg = KODIMO|LED_SERVO_EXTENSION; 
 
 /*variable*/
-volatile bool en_irq_distance = false; /*bien lay ra tu thanh ghi config SR04, kt co enable ngat khong*/
+volatile bool en_irq_distance = FALSE; /*bien lay ra tu thanh ghi config SR04, kt co enable ngat khong*/
 uint8_t distance_detected = 10 ; /*khoang cach detect ultrasonic unit: cm*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -105,10 +105,23 @@ void init_tim2();
 /*
 Tao xung ngan tren Pin C5  detect LOW->HIGH
 */
-static inline genIRQ(){
+static inline void genIRQ(){
   GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
   Delay(0x000F); 
   GPIO_WriteLow(GPIOC,GPIO_PIN_5);
+}
+void print_value(uint8_t value){
+    Printf("value=");
+    if(!value) Printf("NULL");
+    else if(value<10) Printf("10");
+    else if(value<20) Printf("20");
+    else if(value<30) Printf("30");
+    else if(value<40) Printf("40");
+    else if(value<50) Printf("50");
+    else if(value<60) Printf("60");
+    else if(value<70) Printf("70");
+    else Printf("100");
+    Printf("\n");
 }
 void main(void)
 {
@@ -194,6 +207,8 @@ void main(void)
     c++;
     if(c%200==0){
         Printf(".");
+        //print_value(_sr04_dis_reg);
+        //Printf(_sr04_dis_reg);
         if(_sr04_config_reg==0){//kiem tra enable sr04
           
           TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
@@ -206,8 +221,15 @@ void main(void)
           TIM2->CR1 |= TIM2_CR1_CEN; // start timer 2
         }
     }
-    if(c==2000) {c=0;Printf("\n");}
-
+    if(c==2000) {
+      
+      c=0;
+      Printf("\n");
+      //Printf("en=");
+      //print_value(en_irq_distance);
+      //Printf("dis=");
+      //print_value(distance_detected);
+    }
     /*
     if(is_done_mean_dis){
         TRIG_PORT->ODR |= TRIG_PIN; // TRIG high
@@ -440,12 +462,12 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
       _servo_angle = buf[1];
       ServoSetAngle(_servo_angle);
       break;
-    case SET_SERVO_CONFIG_REG:
+    case SET_SR04_CONFIG_REG:
       _sr04_config_reg=buf[1];
       break;
     case SET_SR04_IRQ_DIST_REG:
-      en_irq_distance=buf[1]&0x01; //lay bit cuoi
-      distance_detected = (buf[1]>>3)&0x3F; //lay khoang cach but [7:3]
+      en_irq_distance = buf[1]&0x01; //lay bit cuoi
+      distance_detected = (buf[1]>>2)&0x3F; //lay khoang cach but [7:3]
       break;
     default:
       break;
@@ -478,7 +500,7 @@ void init_tim2()
     // Timer 2
 
     // Prescaler = 2^1 = 2, clk = 1 MHz
-    TIM2->PSCR = 1;
+    TIM2->PSCR = 2;
     TIM2->EGR |= TIM2_EGR_UG;
 
     //only reset counter on UE
@@ -530,15 +552,19 @@ void init_tim2()
    //     LED_PORT->ODR &= ~LED_PIN; // LED on
         uint8_t cm [2];// =0;// (stop-start)/58;
         cm[1]=0x00;cm[0]=0x00;
-        cm[0] = (stop-start)/58;
+        cm[0] = (stop-start)/58;//58
         _sr04_dis_reg = cm[0];
-        if(en_irq_distance&(_sr04_dis_reg<=distance_detected))//kiem tra co enable ngat khong co thì sinh ngat
-        {
-          _evt_reg = 0x01;
-          genIRQ(); //tao ngat
-        }
         // printf("%uus %ucm\r\n", (stop-start),(stop-start)/58);
-        TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
+        //TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
+        if(en_irq_distance==1 && (_sr04_dis_reg<=distance_detected) && cm[0]!=_sr04_dis_reg)//kiem tra co enable ngat khong co thì sinh ngat
+        {
+          _sr04_dis_reg = cm[0];
+          _evt_reg = 0x01;
+          TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
+          genIRQ(); //tao ngat
+        } else {
+          TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
+        }
         is_done_mean_dis  =TRUE; //khong dung cai nay vi no delay 1ms trong main loop
     }
     // clear all flags
