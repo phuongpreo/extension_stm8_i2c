@@ -553,18 +553,19 @@ void init_tim2()
         uint8_t cm [2];// =0;// (stop-start)/58;
         cm[1]=0x00;cm[0]=0x00;
         cm[0] = (stop-start)/58;//58
-        //_sr04_dis_reg = cm[0];
         // printf("%uus %ucm\r\n", (stop-start),(stop-start)/58);
-        //TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
-        if(en_irq_distance==1 && (_sr04_dis_reg<=distance_detected) && cm[0]!=_sr04_dis_reg)//kiem tra co enable ngat khong co thì sinh ngat
+        TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
+        if(en_irq_distance==1 && (cm[0]<=distance_detected))//kiem tra co enable ngat khong co thì sinh ngat
         {
+          if(_sr04_dis_reg!=cm[0]){
           _sr04_dis_reg = cm[0];
           _evt_reg = 0x01;
-          TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
           genIRQ(); //tao ngat
+          }
         } else {
-          TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
+          _sr04_dis_reg = cm[0];
         }
+
         is_done_mean_dis  =TRUE; //khong dung cai nay vi no delay 1ms trong main loop
     }
     // clear all flags
