@@ -100,19 +100,22 @@ uint32_t nrf_drv_mpu_init(void)
 	
 	return NRF_SUCCESS;
 }
-    uint8_t address;
-    uint8_t sample_data;
-    bool detected_device = false;
+uint8_t address;
+uint8_t sample_data;
+bool detected_device = false;
+uint8_t numberDevice = 0;
 void scan_address(){
-uint32_t err_code;
-uint32_t timeout = MPU_TWI_TIMEOUT;
-    for (address = 1; address <= TWI_ADDRESSES; address++)
+    NRF_LOG_INFO("Begin Scan Address I2C");
+    uint32_t err_code;
+    uint32_t timeout = MPU_TWI_TIMEOUT;
+    for (address = 20; address <= TWI_ADDRESSES; address++)
     {
         err_code = nrf_drv_twi_rx(&m_twi_instance, address, &sample_data, sizeof(sample_data));
         if (err_code == NRF_SUCCESS)
         {
             detected_device = true;
-            NRF_LOG_INFO("TWI device detected at address 0x%x.", address<<1);
+            numberDevice++;
+            NRF_LOG_INFO("TWI device detected at address 0x%x.", address);//0xAC 0001 0100
         }
         if(err_code != NRF_SUCCESS) return err_code;
 

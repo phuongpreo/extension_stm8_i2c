@@ -392,14 +392,14 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
 
       /* Check on EV2*/
     case I2C_EVENT_SLAVE_BYTE_RECEIVED:
-      //Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData();
-       //ignore more than 3 bytes reading
+//Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData();
+//ignore more than 3 bytes reading
 //      if (reading > 3){
 //        reading=0;
 //       read_p=buf;
 //        return;
 //      }
-        //read bytes from slave
+//read bytes from slave
         *read_p++ = I2C_ReceiveData();
         reading++;
       break;
@@ -436,7 +436,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19)
     default:
       break;
     }
- /*
+/*
     if (buf[0] == EXTENSION_GET_EVT_REG){ //INT 
                val = evt_reg;//buf[1] + buf[2];
     } else if (buf[0] == EXTENSION_ROTATE_LED_REG){

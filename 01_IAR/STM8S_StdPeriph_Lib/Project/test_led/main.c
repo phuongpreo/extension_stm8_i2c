@@ -60,7 +60,7 @@ void main(void)
   /* Initialize I/Os in Output Mode */
   GPIO_Init(GPIOD, GPIO_PIN_4, GPIO_MODE_OUT_PP_LOW_FAST);
 
-
+ /*Lap vo tan*/
   while (1)
   {
     /* Toggles LEDs */

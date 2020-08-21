@@ -167,13 +167,17 @@ void in_pin_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
 static void btn1_event_handler(){
 //            nrf_drv_mpu_write_single_register(SET_SERVO_CONFIG_REG,0x00);
             NRF_LOG_INFO("btn 1");
-                angle_value+=10;
+                 if(angle_value<100) {
+                  angle_value+=10;
+                 }
                 is_write_servo = true;
 }
 static void btn2_event_handler(){
 //            nrf_drv_mpu_write_single_register(SET_SERVO_CONFIG_REG,0x01);
             NRF_LOG_INFO("btn 2");
-                 angle_value-=10;
+                 if(angle_value>10) {
+                  angle_value-=10;
+                 }
                  is_write_servo = true;
 }
 static void btn3_event_handler(){
@@ -296,10 +300,13 @@ int main(void)
 
 
     NRF_LOG_INFO("Heloooooo");NRF_LOG_FLUSH();
+    scan_address();
+
+
 
     uint8_t typeDevice[0]={0x00};
     nrf_drv_mpu_read_registers(GET_TYPE_DEVICE_REG,typeDevice,1);
-    NRF_LOG_INFO("TYPE_DEVICE_REG=%x",typeDevice[0]);
+    NRF_LOG_INFO("TYPE_DEVICE_REG=0x%x",typeDevice[0]);
     NRF_LOG_INFO("%s from %s",(typeDevice[0]&0x3F)==LED_SERVO_EXTENSION?"LED_SERVO_EXTENSION":"Unknow",(typeDevice[0]&0xC0)==KODIMO?"KODIMO":"Unknow");
     nrf_drv_mpu_write_single_register(SET_SERVO_CONFIG_REG,0x01);
 
@@ -308,9 +315,9 @@ int main(void)
 //
 //    err_code = app_timer_start(m_repeat_id, APP_TIMER_TICKS(500), NULL);
 //    APP_ERROR_CHECK(err_code);
+
     while (true)
     {
-//      scan_address();
 
       if(is_irq_extension){
         switch(evt[0]){
@@ -337,8 +344,6 @@ int main(void)
 //      nrf_drv_mpu_write_registers(CONFIG,p_tx,3);
       if(is_write_servo){
             NRF_LOG_INFO("angle_value:%d",angle_value);
-            if(angle_value > 80) angle_value = 90;
-            if(angle_value < 10) angle_value = 1;
             nrf_drv_mpu_write_single_register(SET_SERVO_ANGLE_REG,angle_value);
             is_write_servo=false;
       }
