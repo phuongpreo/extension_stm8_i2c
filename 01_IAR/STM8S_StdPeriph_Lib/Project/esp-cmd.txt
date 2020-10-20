@@ -1,0 +1,4 @@
+i2cdetect
+i2cconfig --sda=22 --scl=21
+i2cget -c=0x65 -r=0x23
+i2cset -c=0x65 -r=0xA3 50

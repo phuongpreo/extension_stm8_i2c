@@ -260,7 +260,7 @@ int main(void)
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("TWI scanner started.");
+    NRF_LOG_INFO("TWI scanner started.324123");
     NRF_LOG_FLUSH();
 //    err_code = app_timer_init();
 //    APP_ERROR_CHECK(err_code);
@@ -295,7 +295,8 @@ int main(void)
     nrf_drv_gpiote_in_event_enable(BUTTON_2, true);
     nrf_drv_gpiote_in_event_enable(BUTTON_3, true);
 
-    nrf_drv_mpu_init();
+    err_code =  nrf_drv_mpu_init();
+    APP_ERROR_CHECK(err_code);
     NRF_LOG_INFO("111");
     NRF_LOG_FLUSH();
     //Set Commands
@@ -303,14 +304,14 @@ int main(void)
 
     NRF_LOG_INFO("Heloooooo");NRF_LOG_FLUSH();
 
-
+//nrf_drv_mpu_write_single_register(SET_SERVO_ANGLE_REG,50);
 
     uint8_t typeDevice[0]={0x00};
     nrf_drv_mpu_read_registers(GET_TYPE_DEVICE_REG,typeDevice,1);
     NRF_LOG_INFO("TYPE_DEVICE_REG=0x%x",typeDevice[0]);
     NRF_LOG_INFO("%s from %s",(typeDevice[0]&0x3F)==LED_SERVO_EXTENSION?"LED_SERVO_EXTENSION":"Unknow",(typeDevice[0]&0xC0)==KODIMO?"KODIMO":"Unknow");
-    nrf_drv_mpu_write_single_register(SET_SR04_CONFIG_REG,0x01); //enable sr04
-    nrf_drv_mpu_write_single_register(SET_SR04_IRQ_DIST_REG,0x81); //enable 32cm 
+    //nrf_drv_mpu_write_single_register(SET_SR04_CONFIG_REG,0x01); //enable sr04
+    //nrf_drv_mpu_write_single_register(SET_SR04_IRQ_DIST_REG,0x81); //enable 32cm 
 
 //    err_code = scan_address();
 //    APP_ERROR_CHECK(err_code);

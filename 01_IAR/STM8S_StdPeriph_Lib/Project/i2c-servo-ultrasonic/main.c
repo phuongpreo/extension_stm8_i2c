@@ -55,9 +55,10 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
   /* Private variables ---------------------------------------------------------*/
-//__IO uint8_t Slave_Buffer_Rx[6];//255
-//__IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
+__IO uint8_t Slave_Buffer_Rx[6];//255
+__IO uint8_t Tx_Idx = 0, Rx_Idx = 0;
 //__IO uint16_t Event = 0x00;
+volatile bool is_new_servo_angle = FALSE;
 volatile bool is_done_mean_dis = TRUE;
 volatile bool is_stop =FALSE;
 volatile bool Rx_Add_MATCHED =FALSE;
@@ -83,6 +84,8 @@ const uint8_t _type_device_reg = KODIMO|LED_SERVO_EXTENSION;
 
 /*variable*/
 volatile bool en_irq_distance = FALSE; /*bien lay ra tu thanh ghi config SR04, kt co enable ngat khong*/
+volatile int  g_evt = 0;
+volatile char g_buf = 0;
 uint8_t distance_detected = 10 ; /*khoang cach detect ultrasonic unit: cm*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -106,9 +109,11 @@ void init_tim2();
 Tao xung ngan tren Pin C5  detect LOW->HIGH
 */
 static inline void genIRQ(){
+  /*
   GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
   Delay(0x000F); 
   GPIO_WriteLow(GPIOC,GPIO_PIN_5);
+*/
 }
 void print_value(uint8_t value){
     Printf("value=");
@@ -141,7 +146,8 @@ void main(void)
   /* Initialize I2C peripheral */
 
 #ifdef I2C_slave_7Bits_Address
-  I2C_Init(100000, SLAVE_ADDRESS, I2C_DUTYCYCLE_2, I2C_ACK_CURR, I2C_ADDMODE_7BIT, 16);           
+  I2C_Init(100000, SLAVE_ADDRESS, I2C_DUTYCYCLE_2, I2C_ACK_CURR, I2C_ADDMODE_7BIT, 16);
+  Printf("7bit\n");
 #else
   I2C_Init(100000, SLAVE_ADDRESS, I2C_DUTYCYCLE_2, I2C_ACK_CURR,I2C_ADDMODE_10BIT, 16);
 #endif
@@ -203,10 +209,56 @@ void main(void)
     Delay_ms(1000);
 */
 
-    Delay_ms(1);
+    //Delay_ms(1);
     c++;
+    if(is_new_servo_angle){
+      ServoSetAngle(_servo_angle);
+      is_new_servo_angle=FALSE;
+    }
+    
+    switch(g_evt){
+    case 0:
+      break;
+    case 0xfe:
+      Printf("e\n");
+      break;
+    case 0xff:
+      Printf("f\n");
+      break;
+    case GET_CONFIG_REG:
+      Printf("GET_CONFIG_REG\n");
+      break;
+    case GET_TYPE_DEVICE_REG:
+      Printf("GET_TYPE_DEVICE_REG\n");
+      break;
+    case GET_EVT_REG:
+      Printf("GET_EVT_REG");
+      break;
+    case GET_SR04_DIS_DATA_REG:
+      Printf("GET_SR04_DIS_DATA_REG\n");
+      break;
+    case GET_SERVO_ANGLE_REG:
+      Printf("GET_SERVO_ANGLE_REG\n");
+      break;
+    case SET_CONFIG_REG:
+      Printf("SET_CONFIG_REG\n");
+      break;
+    case SET_SERVO_ANGLE_REG:
+      Printf("SET_SERVO_ANGLE_REG\n");
+      break;
+    case SET_SR04_CONFIG_REG:
+      Printf("SET_SR04_CONFIG_REG\n");
+      break;
+    case SET_SR04_IRQ_DIST_REG:
+      Printf("SET_SR04_IRQ_DIST_REG\n");
+      break;
+    default:
+      Printf("x\n");
+      break;
+    }
+    g_evt=0;
     if(c%200==0){
-        Printf(".");
+        //Printf(".");
         //print_value(_sr04_dis_reg);
         //Printf(_sr04_dis_reg);
         if(_sr04_config_reg==0){//kiem tra enable sr04
@@ -224,7 +276,7 @@ void main(void)
     if(c==2000) {
       
       c=0;
-      Printf("\n");
+      //Printf("\n");
       //Printf("en=");
       //print_value(en_irq_distance);
       //Printf("dis=");
@@ -383,116 +435,268 @@ void SetupSerialPort()
   * @retval
   * None
   */
+
+//
+//INTERRUPT_HANDLER(I2C_IRQHandler, 19)
+//{
+//  /* Read SR2 register to get I2C error:rst22 */
+//  if ((I2C->SR2) != 0)
+//  {
+//    /* Clears SR2 register */
+//    I2C->SR2 = 0;
+//
+//    /* Set LED2 */
+//
+//  }
+//  switch (I2C_GetLastEvent())
+//  {
+//      /******* Slave transmitter ******/ //tuong duong voi i2c master read data
+//      /* check on EV1 */
+//    case I2C_EVENT_SLAVE_TRANSMITTER_ADDRESS_MATCHED:
+//      Tx_Add_MATCHED=TRUE;
+//      reading = 0;
+//      read_p = buf;
+//      write_p = ((volatile uint8_t *)(&val) + 0);//((volatile uint8_t *)(&val) + 1); Dung cho val =16 byte
+//      writing = 1;
+//      //Tx_Idx = 0;
+//      //g_evt = 0xfe;
+//      Printf("t");
+//      break;
+//
+//      /* check on EV3 */
+//    case I2C_EVENT_SLAVE_BYTE_TRANSMITTING:
+//      Printf("2");
+//      /* Transmit data */
+//      //I2C_SendData(Slave_Buffer_Rx[Tx_Idx++]);
+//      if(writing==0) {
+//        I2C_SendData(0x00) ;
+//      }else 
+//      {
+//        I2C_SendData(*write_p--);
+//      }
+//      while (!I2C_CheckEvent(I2C_EVENT_SLAVE_BYTE_TRANSMITTED));
+//      writing--;
+//      break;
+//      /******* Slave receiver **********///master write data
+//      /* check on EV1*/
+//    case I2C_EVENT_SLAVE_RECEIVER_ADDRESS_MATCHED:
+//            Rx_Add_MATCHED = TRUE;
+//            reading = 0;
+//            read_p = buf;
+//            //g_evt = 0xff;
+//            Printf("r");
+//      break;
+//
+//      /* Check on EV2*/
+//    case I2C_EVENT_SLAVE_BYTE_RECEIVED:
+//      
+////Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData();
+////ignore more than 3 bytes reading
+////      if (reading > 3){
+////        reading=0;
+////       read_p=buf;
+////        return;
+////      }
+////read bytes from slave
+//        *read_p++ = I2C_ReceiveData();
+//        reading++;
+//        
+//      break;
+//
+//      /* Check on EV4 */
+//  case I2C_EVENT_SLAVE_STOP_DETECTED:{
+//    Printf("d");
+//            /* write to CR2 to clear STOPF flag */
+//    g_buf=buf[0];
+//    //g_evt = buf[0];
+//    switch(buf[0]){
+//    case GET_CONFIG_REG:
+//      val = _config;
+//      break;
+//    case GET_TYPE_DEVICE_REG:
+//      val = _type_device_reg;
+//      break;
+//    case GET_EVT_REG:
+//      val = _evt_reg;_evt_reg=0x00;
+//      break;
+//    case GET_SR04_DIS_DATA_REG:
+//      val = _sr04_dis_reg;
+//      break;
+//    case GET_SERVO_ANGLE_REG:
+//      val = _servo_angle;
+//      break;
+//    case SET_CONFIG_REG:
+//      _config = buf[1];
+//      break;
+//    case SET_SERVO_ANGLE_REG:
+//      //g_evt=SET_SERVO_ANGLE_REG;
+//      _servo_angle = buf[1];
+//      ServoSetAngle(_servo_angle);
+//      break;
+//    case SET_SR04_CONFIG_REG:
+//      _sr04_config_reg=buf[1];
+//      break;
+//    case SET_SR04_IRQ_DIST_REG:
+//      en_irq_distance = buf[1]&0x01; //lay bit cuoi
+//      distance_detected = (buf[1]>>2)&0x3F; //lay khoang cach but [7:3]
+//      break;
+//    default:
+//      break;
+//    }
+///*
+//    if (buf[0] == EXTENSION_GET_EVT_REG){ //INT 
+//               val = evt_reg;//buf[1] + buf[2];
+//    } else if (buf[0] == EXTENSION_ROTATE_LED_REG){
+//              //val =0x1234; //0x12 0x34
+//              evt_reg = buf[1];
+//    }
+//    else if (buf[0] == SR04_DIS_DATA_REG){
+//              val = sr04_dis_reg;
+//    } else if (buf[0] >= 0x80) { //con lai la set value
+//      is_stop=TRUE;
+//    }
+//*/
+//            I2C->CR2 |= I2C_CR2_ACK;
+//    //char* a;*a= 0x30+g_buf;
+//    Printf("s");
+//  }
+//      break;
+//    default:
+//      break;
+//  }
+//
+//}
+
 INTERRUPT_HANDLER(I2C_IRQHandler, 19)
 {
-  /* Read SR2 register to get I2C error */
-  if ((I2C->SR2) != 0)
+    static u8 sr1;                  
+    static u8 sr2;
+    static u8 sr3;
+ 
+    // save the I2C registers configuration
+    sr1 = I2C->SR1;
+    sr2 = I2C->SR2;
+    sr3 = I2C->SR3;
+ 
+    /* Communication error? */
+  if (sr2 & (I2C_SR2_WUFH | I2C_SR2_OVR |I2C_SR2_ARLO |I2C_SR2_BERR))
+  {     
+    I2C->CR2|= I2C_CR2_STOP;  // stop communication - release the lines
+    I2C->SR2= 0;                        // clear all error flags
+   Printf("b");
+    }
+ 
+    /* More bytes received ? */
+  if ((sr1 & (I2C_SR1_RXNE | I2C_SR1_BTF)) == (I2C_SR1_RXNE | I2C_SR1_BTF))
   {
-    /* Clears SR2 register */
-    I2C->SR2 = 0;
-
-    /* Set LED2 */
-
+    //I2C_byte_received(I2C->DR);
+    Printf("1");
+        Slave_Buffer_Rx[Rx_Idx++] = I2C->DR;
+        
   }
-  switch (I2C_GetLastEvent())
+ 
+    /* Byte received ? */
+  if (sr1 & I2C_SR1_RXNE)
   {
-      /******* Slave transmitter ******/ //tuong duong voi i2c master read data
-      /* check on EV1 */
-    case I2C_EVENT_SLAVE_TRANSMITTER_ADDRESS_MATCHED:
-      Tx_Add_MATCHED=TRUE;
-      reading = 0;
-      read_p = buf;
-      write_p = ((volatile uint8_t *)(&val) + 0);//((volatile uint8_t *)(&val) + 1); Dung cho val =16 byte
-      writing = 1;
-      //Tx_Idx = 0;
-      break;
-
-      /* check on EV3 */
-    case I2C_EVENT_SLAVE_BYTE_TRANSMITTING:
-      /* Transmit data */
-      //I2C_SendData(Slave_Buffer_Rx[Tx_Idx++]);
-      I2C_SendData(*write_p--);
-      writing--;
-      break;
-      /******* Slave receiver **********///master write data
-      /* check on EV1*/
-    case I2C_EVENT_SLAVE_RECEIVER_ADDRESS_MATCHED:
-            Rx_Add_MATCHED = TRUE;
-            reading = 0;
-            read_p = buf;
-      break;
-
-      /* Check on EV2*/
-    case I2C_EVENT_SLAVE_BYTE_RECEIVED:
-//Slave_Buffer_Rx[Rx_Idx++] = I2C_ReceiveData();
-//ignore more than 3 bytes reading
-//      if (reading > 3){
-//        reading=0;
-//       read_p=buf;
-//        return;
-//      }
-//read bytes from slave
-        *read_p++ = I2C_ReceiveData();
-        reading++;
-      break;
-
-      /* Check on EV4 */
-  case I2C_EVENT_SLAVE_STOP_DETECTED:{
-            /* write to CR2 to clear STOPF flag */
-    switch(buf[0]){
-    case GET_CONFIG_REG:
-      val = _config;
-      break;
-    case GET_TYPE_DEVICE_REG:
-      val = _type_device_reg;
-      break;
-    case GET_EVT_REG:
-      val = _evt_reg;_evt_reg=0x00;
-      break;
-    case GET_SR04_DIS_DATA_REG:
-      val = _sr04_dis_reg;
-      break;
-    case GET_SERVO_ANGLE_REG:
-      val = _servo_angle;
-      break;
-    case SET_CONFIG_REG:
-      _config = buf[1];
-      break;
-    case SET_SERVO_ANGLE_REG:
-      _servo_angle = buf[1];
-      ServoSetAngle(_servo_angle);
-      break;
-    case SET_SR04_CONFIG_REG:
-      _sr04_config_reg=buf[1];
-      break;
-    case SET_SR04_IRQ_DIST_REG:
-      en_irq_distance = buf[1]&0x01; //lay bit cuoi
-      distance_detected = (buf[1]>>2)&0x3F; //lay khoang cach but [7:3]
-      break;
-    default:
-      break;
-    }
-/*
-    if (buf[0] == EXTENSION_GET_EVT_REG){ //INT 
-               val = evt_reg;//buf[1] + buf[2];
-    } else if (buf[0] == EXTENSION_ROTATE_LED_REG){
-              //val =0x1234; //0x12 0x34
-              evt_reg = buf[1];
-    }
-    else if (buf[0] == SR04_DIS_DATA_REG){
-              val = sr04_dis_reg;
-    } else if (buf[0] >= 0x80) { //con lai la set value
-      is_stop=TRUE;
-    }
-*/
-            I2C->CR2 |= I2C_CR2_ACK;
+    //I2C_byte_received(I2C->DR);
+        Slave_Buffer_Rx[Rx_Idx++] = I2C->DR;
+         Printf("r");
+         switch(Slave_Buffer_Rx[0]){
+          case SET_CONFIG_REG:
+            _config = Slave_Buffer_Rx[1];
+            break;
+          case SET_SERVO_ANGLE_REG:
+            //g_evt=SET_SERVO_ANGLE_REG;
+            _servo_angle = Slave_Buffer_Rx[1];
+            is_new_servo_angle = TRUE;
+            //ServoSetAngle(_servo_angle);
+            break;
+          case SET_SR04_CONFIG_REG:
+            _sr04_config_reg=Slave_Buffer_Rx[1];
+            break;
+          case SET_SR04_IRQ_DIST_REG:
+            en_irq_distance = Slave_Buffer_Rx[1]&0x01; //lay bit cuoi
+            distance_detected = (Slave_Buffer_Rx[1]>>2)&0x3F; //lay khoang cach but [7:3]
+            break;
+          default:
+            break;
+          }
   }
-      break;
-    default:
-      break;
+ 
+    /* NAK? (=end of slave transmit comm) */
+  if (sr2 & I2C_SR2_AF)
+  { 
+    I2C->SR2 &= ~I2C_SR2_AF;      // clear AF
+            Printf("o");
+    }
+ 
+    /* Stop bit from Master  (= end of slave receive comm) */
+  if (sr1 & I2C_SR1_STOPF) 
+  {
+    I2C->CR2 |= I2C_CR2_ACK;      // CR2 write to clear STOPF
+            Printf("i");
+    }
+ 
+    /* Slave address matched (= Start Comm) */
+  if (sr1 & I2C_SR1_ADDR)
+  {
+        Rx_Idx = 0;
+        Printf("2");
+    }
+ 
+    /* More bytes to transmit ? */
+  if ((sr1 & (I2C_SR1_TXE | I2C_SR1_BTF)) == (I2C_SR1_TXE | I2C_SR1_BTF))
+  {
+        I2C_SendData(0x00);
+        Printf("3");
   }
-
+ 
+    /* Byte to transmit ? */
+  if (sr1 & I2C_SR1_TXE)
+  {
+ 
+        if (Rx_Idx == 0)
+        {
+          uint8_t val=0xff;
+          switch(Slave_Buffer_Rx[0]){
+            case GET_CONFIG_REG:
+              val = _config;
+              break;
+            case GET_TYPE_DEVICE_REG:
+              val = _type_device_reg;
+              break;
+            case GET_EVT_REG:
+              val = _evt_reg;_evt_reg=0x00;
+              break;
+            case GET_SR04_DIS_DATA_REG:
+              val = _sr04_dis_reg;
+              break;
+            case GET_SERVO_ANGLE_REG:
+              val = _servo_angle;
+              break;
+            default:
+              break;
+          }
+            I2C->DR = val;//(0x41 >> 8);
+        }
+        else if (Rx_Idx ==1)
+        {           
+            I2C->DR = 0xfe;
+        }
+        else
+        {
+            I2C->DR = 0xff;
+        }
+        Rx_Idx++;    
+        Printf("5");
+  } 
+ 
+    return; 
 }
+
+
+
+
 volatile uint16_t start = 0;
 volatile uint16_t stop = 0;
 void init_tim2()
