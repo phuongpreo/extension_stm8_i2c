@@ -82,6 +82,8 @@ volatile uint8_t _servo_angle = 0x00;
 volatile uint8_t _sr04_config_reg = 0x00;
 const uint8_t _type_device_reg = KODIMO|LED_SERVO_EXTENSION; 
 
+bool irq_sr04_on =FALSE;
+
 /*variable*/
 volatile bool en_irq_distance = FALSE; /*bien lay ra tu thanh ghi config SR04, kt co enable ngat khong*/
 volatile int  g_evt = 0;
@@ -109,11 +111,10 @@ void init_tim2();
 Tao xung ngan tren Pin C5  detect LOW->HIGH
 */
 static inline void genIRQ(){
-  /*
+  
   GPIO_WriteHigh(GPIOC,GPIO_PIN_5);
   Delay(0x000F); 
   GPIO_WriteLow(GPIOC,GPIO_PIN_5);
-*/
 }
 void print_value(uint8_t value){
     Printf("value=");
@@ -177,6 +178,7 @@ void main(void)
   ServoSetAngle(0);
   /*Main Loop */
   int16_t c =0;
+  
   while (1)
   {
     /* infinite loop */
@@ -215,7 +217,10 @@ void main(void)
       ServoSetAngle(_servo_angle);
       is_new_servo_angle=FALSE;
     }
-    
+    if(irq_sr04_on) {
+      irq_sr04_on=FALSE;
+      genIRQ();
+    }
     switch(g_evt){
     case 0:
       break;
@@ -355,13 +360,13 @@ uint8_t get_cout_content(__IO uint8_t *buff){
 //
 void Printf(char *message)
 {
-    char *ch = message;
-    while (*ch)
-    {
-        UART1->DR = (u8) (*ch);
-        while ((UART1->SR & (u8) UART1_FLAG_TXE) == RESET);
-        ch++;
-    }
+//    char *ch = message;
+//    while (*ch)
+//    {
+//        UART1->DR = (u8) (*ch);
+//        while ((UART1->SR & (u8) UART1_FLAG_TXE) == RESET);
+//        ch++;
+//    }
 }
 //Setup PWM Servo
 void ServoSetAngle(uint8_t angle){
@@ -704,7 +709,7 @@ void init_tim2()
     // Timer 2
 
     // Prescaler = 2^1 = 2, clk = 1 MHz
-    TIM2->PSCR = 2;
+    TIM2->PSCR = 4;
     TIM2->EGR |= TIM2_EGR_UG;
 
     //only reset counter on UE
@@ -747,24 +752,28 @@ void init_tim2()
  //       LED_PORT->ODR |= LED_PIN; // LED off
         //TIM2->EGR |= TIM2_EGR_UG; // reset counter
     }
-
     // read counter on falling edge
     if(TIM2->SR1 & TIM2_SR1_CC2IF)
     {
         stop = (TIM2->CCR2H) * 256;
         stop += TIM2->CCR2L;
+        TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
    //     LED_PORT->ODR &= ~LED_PIN; // LED on
         uint8_t cm [2];// =0;// (stop-start)/58;
         cm[1]=0x00;cm[0]=0x00;
-        cm[0] = (stop-start)/58;//58
+        
+        int16_t cmm = (stop-start);//58
+        cmm=cmm/58;
+        if(cmm<0 || cmm > 150) cmm = 150;
+        cm[0]=(uint8_t)cmm;
         // printf("%uus %ucm\r\n", (stop-start),(stop-start)/58);
-        TIM2->CR1 &= ~TIM2_CR1_CEN; // stop timer 2
+        
         if(en_irq_distance==1 && (cm[0]<=distance_detected))//kiem tra co enable ngat khong co thì sinh ngat
         {
           if(_sr04_dis_reg!=cm[0]){
           _sr04_dis_reg = cm[0];
           _evt_reg = 0x01;
-          genIRQ(); //tao ngat
+          irq_sr04_on=TRUE;
           }
         } else {
           _sr04_dis_reg = cm[0];

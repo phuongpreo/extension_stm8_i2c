@@ -310,8 +310,8 @@ int main(void)
     nrf_drv_mpu_read_registers(GET_TYPE_DEVICE_REG,typeDevice,1);
     NRF_LOG_INFO("TYPE_DEVICE_REG=0x%x",typeDevice[0]);
     NRF_LOG_INFO("%s from %s",(typeDevice[0]&0x3F)==LED_SERVO_EXTENSION?"LED_SERVO_EXTENSION":"Unknow",(typeDevice[0]&0xC0)==KODIMO?"KODIMO":"Unknow");
-    //nrf_drv_mpu_write_single_register(SET_SR04_CONFIG_REG,0x01); //enable sr04
-    //nrf_drv_mpu_write_single_register(SET_SR04_IRQ_DIST_REG,0x81); //enable 32cm 
+    nrf_drv_mpu_write_single_register(SET_SR04_CONFIG_REG,0x01); //enable sr04
+    nrf_drv_mpu_write_single_register(SET_SR04_IRQ_DIST_REG,0x51); //enable 32cm 
 
 //    err_code = scan_address();
 //    APP_ERROR_CHECK(err_code);
